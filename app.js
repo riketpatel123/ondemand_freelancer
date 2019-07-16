@@ -18,10 +18,9 @@ app.use((req, res, next) => {
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB, { useNewUrlParser: true }).then(
-  () => {console.log('Database is connected') },
-  err => { console.log('MongoDB connection Error'+ err)}
-);
+mongoose.connect(process.env.DB, { useNewUrlParser: true })
+.then(() => console.log('Database is connected'))
+.catch(err => console.log('MongoDB connection Error'+ err));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
