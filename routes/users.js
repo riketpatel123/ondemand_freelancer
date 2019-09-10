@@ -24,7 +24,8 @@ router.post("/register", (req, res) => {
             const newUser = new User({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                user_type: req.body.user_type
             });
 
             // Password hashing before saveing to database
@@ -64,14 +65,15 @@ router.post("/login", (req, res) => {
                 // Create JWT Payload
                 const payload = {
                     id: user.id,
-                    username: user.username
+                    username: user.username,
+                    user_type: user.user_type
                 };
                 // Sign token
                 jwt.sign(
                     payload,
                     keys,
                     {
-                        expiresIn: 30 // 1 year in seconds
+                        expiresIn: 1200 
                     },
                     (err, token) => {
                         res.json({

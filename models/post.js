@@ -3,8 +3,8 @@ var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
-
 var PostSchema = new Schema({
+    user_id: {type:Schema.Types.ObjectId, ref:'users', required: true},
     post_title:{type: String, required: true},
     post_description:{type: String, required: true},
     post_catagories:{type: String, required: true},
