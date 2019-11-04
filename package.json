@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "backend": "nodemon app.js",
     "frontend": "npm start --prefix client",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\""
@@ -35,5 +35,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.4"
+  },
+  "engines": {
+    "node": "8.11.2"
   }
 }
