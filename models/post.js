@@ -3,8 +3,8 @@ var moment = require('moment');
 
 var Schema = mongoose.Schema;
 
-
 var PostSchema = new Schema({
+    user_id: {type:Schema.Types.ObjectId, ref:'users', required: true},
     post_title:{type: String, required: true},
     post_description:{type: String, required: true},
     post_catagories:{type: String, required: true},
@@ -15,15 +15,6 @@ var PostSchema = new Schema({
     province:{type: String, required: true},
     country:{type: String, required: true},
     post_date:{type: Date, default: Date.now}
-});
-
-PostSchema.virtual('full_address')
-.get(function(){
-    return this.address + ','
-     + this.city + ','
-      + this.province + ','
-       + this.country + ','
-        + this.postal_code;
 });
 
 PostSchema.virtual('post_date_formatted')
