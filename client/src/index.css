@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.input_bid_amount {
+    border-left: 2px solid black;
+}
+
+.container {
+    background-color: #f0f0f0;
+    padding: 25px;
+}
+
+.post_items {
+    margin-bottom: 5px;
+}
+
+.overflow {
+    width: 20em;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+}
+
+.tab-item{
+    padding-left: 20px;
+    padding-right: 20px;
+    border-right: 2px solid black;
+}

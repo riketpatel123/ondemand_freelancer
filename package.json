@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "backend": "nodemon app.js",
-    "frontend": "npm start --prefix ../freelancing-app",
+    "frontend": "npm start --prefix client",
     "dev":"concurrently \"npm run backend\" \"npm run frontend\""
   },
   "author": "riket",

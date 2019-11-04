@@ -1,0 +1,12 @@
+.tab-item{
+    padding-left: 20px;
+    padding-right: 80px;
+    border-right: 2px solid black;
+}
+.reviewPanel{
+    display: none;
+}
+
+.item{
+    border-bottom: 1px solid black;
+}

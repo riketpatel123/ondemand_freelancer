@@ -1,0 +1,80 @@
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
+
+class Login extends Component {
+    constructor() {
+        super();
+        this.state = {
+            email: "",
+            password: "",
+            errors: {}
+        };
+    }
+    componentDidMount() {
+        // If logged in and user navigates to Login page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/browse");
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/browse"); // push user to post when they login
+        }
+        if (nextProps.errors) {
+            this.setState({
+                errors: nextProps.errors
+            });
+        }
+    }
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
+    onSubmit = e => {
+        e.preventDefault();
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        this.props.loginUser(userData);
+    };
+    render() {
+        const { errors } = this.state;
+        return (
+            <div class="container p-4">
+                <Link to="/" class="btn btn-link"><i class="fas fa-arrow-left"></i> Back to home </Link>
+                <form class="border border-light p-5" noValidate onSubmit={this.onSubmit}>
+                    <p class="h4 mb-4 text-center">Sign in</p>
+                    <input type="email"
+                        class="form-control mb-4"
+                        placeholder="E-mail"
+                        onChange={this.onChange}
+                        value={this.state.email}
+                        error={errors.email}
+                        id="email" />
+                    <span class="red-text">{errors.email}{errors.emailnotfound}</span>
+                    <input type="password"
+                        class="form-control mb-4"
+                        placeholder="Password"
+                        onChange={this.onChange}
+                        value={this.state.password}
+                        error={errors.password}
+                        id="password" />
+                    <span class="red-text">{errors.password}{errors.passwordincorrect}</span>
+                    <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                    <div class="text-center">
+                        <p>Not a member? <Link to="/register">Register</Link></p>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+}
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+export default connect(mapStateToProps, { loginUser })(Login);
+
+
