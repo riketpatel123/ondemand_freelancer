@@ -7,6 +7,7 @@ const keys = process.env.secretKey;
 
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
+var user_controller = require('../controllers/userController');
 
 const User = require('../models/user');
 
@@ -14,27 +15,30 @@ router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
 
     if (!isValid) {
+        console.log("ERROR: ",errors);
         return res.status(400).json(errors);
     }
 
     User.findOne({ email: req.body.email }).then(user => {
-        if (user) {
+        if(user) {
             return res.status(400).json({ email: "Email Already Registered" });
         } else {
             const newUser = new User({
                 username: req.body.username,
                 email: req.body.email,
-                password: req.body.password,
-                user_type: req.body.user_type
+                password: req.body.password
             });
-
+            
             // Password hashing before saveing to database
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
                     newUser.password = hash;
                     newUser.save()
-                        .then(username => res.json(username))
+                        .then(newUserData =>{
+                            console.log("INFO:", newUserData);
+                            res.json(newUserData);
+                        })
                         .catch(err => console.log(err)
                         );
                 });
@@ -47,6 +51,7 @@ router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
 
     if (!isValid) {
+        console.log("ERROR: ",errors);
         return res.status(400).json(errors);
     }
 
@@ -84,6 +89,7 @@ router.post("/login", (req, res) => {
                         });
                     }
                 );
+                console.log("[backend] INFO:",email,"> User Signed into System ");
             } else {
                 return res
                     .status(400)
@@ -92,4 +98,17 @@ router.post("/login", (req, res) => {
         });
     });
 });
+
+/** Create new user profile */
+router.post('/userprofile/:user_id', user_controller.create_user_profile);
+
+/** Get User Profile */
+router.get('/userprofile/:user_id', user_controller.view_user_profile);
+
+/** Get User Review and Comment */
+router.get('/userprofile/review/:user_id', user_controller.view_user_reviews_and_comments);
+
+/** Create new Reviews of user */
+router.post('/feedback/review', user_controller.create_new_review);
+
 module.exports = router;

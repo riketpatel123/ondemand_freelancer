@@ -17,15 +17,6 @@ var PostSchema = new Schema({
     post_date:{type: Date, default: Date.now}
 });
 
-PostSchema.virtual('full_address')
-.get(function(){
-    return this.address + ','
-     + this.city + ','
-      + this.province + ','
-       + this.country + ','
-        + this.postal_code;
-});
-
 PostSchema.virtual('post_date_formatted')
 .get(function () {
   return moment(this.due_back).format('MMMM Do, YYYY');

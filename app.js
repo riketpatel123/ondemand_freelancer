@@ -9,6 +9,7 @@ var passport = require("passport");
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
+var ondemandRouter = require('./routes/ondemand');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -22,8 +23,8 @@ app.use((req, res, next) => {
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB, { useNewUrlParser: true })
-  .then(() => console.log('Database is connected'))
-  .catch(err => console.log('MongoDB connection Error ' + err));
+  .then(() => console.log('[backend] Database is connected'))
+  .catch(err => console.log('[backend] Database connection Error ' + err));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +36,8 @@ require("./config/passport")(passport);
 
 app.use('/users', usersRouter);
 app.use('/post', indexRouter);
+app.use('/request', ondemandRouter);
 
 app.listen(PORT, function () {
-  console.log('Server is running on Port:', PORT);
+  console.log('[backend] Server is running on Port:', PORT);
 });
