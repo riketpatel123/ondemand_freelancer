@@ -5,6 +5,7 @@ var express = require('express');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var passport = require("passport");
+var path = require('path');
 
 require('dotenv').config();
 
@@ -13,13 +14,16 @@ var ondemandRouter = require('./routes/ondemand');
 var usersRouter = require('./routes/users');
 
 var app = express();
-var PORT = 5000;
+var PORT = process.env.PORT || 8000;
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+// Handle the front end
+app.use(express.static(path.join(__dirname,"client","build")))
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB, { useNewUrlParser: true })
@@ -37,6 +41,10 @@ require("./config/passport")(passport);
 app.use('/users', usersRouter);
 app.use('/post', indexRouter);
 app.use('/request', ondemandRouter);
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname,"client","build","index.html"));
+});
 
 app.listen(PORT, function () {
   console.log('[backend] Server is running on Port:', PORT);
