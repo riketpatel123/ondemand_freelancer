@@ -42,31 +42,33 @@ class Login extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div class="container p-4">
-                <Link to="/" class="btn btn-link"><i class="fas fa-arrow-left"></i> Back to home </Link>
-                <form class="border border-light p-5" noValidate onSubmit={this.onSubmit}>
-                    <p class="h4 mb-4 text-center">Sign in</p>
-                    <input type="email"
-                        class="form-control mb-4"
-                        placeholder="E-mail"
-                        onChange={this.onChange}
-                        value={this.state.email}
-                        error={errors.email}
-                        id="email" />
-                    <span class="red-text">{errors.email}{errors.emailnotfound}</span>
-                    <input type="password"
-                        class="form-control mb-4"
-                        placeholder="Password"
-                        onChange={this.onChange}
-                        value={this.state.password}
-                        error={errors.password}
-                        id="password" />
-                    <span class="red-text">{errors.password}{errors.passwordincorrect}</span>
-                    <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
-                    <div class="text-center">
-                        <p>Not a member? <Link to="/register">Register</Link></p>
-                    </div>
-                </form>
+            <div className="container p-sm-2 d-flex justify-content-center">
+                <div class="card p-lg-4 p-md-4 p-2">
+                    <Link to="/" class="btn btn-link"><i class="fas fa-arrow-left"></i> Back to home </Link>
+                    <form class="border border-light p-lg-5" noValidate onSubmit={this.onSubmit}>
+                        <p class="h4 mb-4 text-center">Sign in</p>
+                        <input type="email"
+                            class="form-control mb-4"
+                            placeholder="E-mail"
+                            onChange={this.onChange}
+                            value={this.state.email}
+                            error={errors.email}
+                            id="email" />
+                        <span class="red-text">{errors.email}{errors.emailnotfound}</span>
+                        <input type="password"
+                            class="form-control mb-4"
+                            placeholder="Password"
+                            onChange={this.onChange}
+                            value={this.state.password}
+                            error={errors.password}
+                            id="password" />
+                        <span class="red-text">{errors.password}{errors.passwordincorrect}</span>
+                        <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                        <div class="text-center">
+                            <p>Not a member? <Link to="/register">Register</Link></p>
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }
