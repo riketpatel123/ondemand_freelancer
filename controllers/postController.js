@@ -105,6 +105,7 @@ exports.submit_user_bid = function (req, res) {
             currentBid.post_id = req.params.id;
             currentBid.username = req.body.username;
             currentBid.bid_amount = req.body.bid_amount;
+            currentBid.user_id = req.body.user_id;
             currentBid.save().then(currentBid => {
                 console.log("INFO: Update bid=>", currentBid);
                 res.status(200).send(currentBid);
@@ -113,6 +114,7 @@ exports.submit_user_bid = function (req, res) {
             var post_bid = new PostBid({
                 post_id: req.params.id,
                 username: req.body.username,
+                user_id: req.body.user_id,
                 bid_amount: req.body.bid_amount
             });
             post_bid.save()

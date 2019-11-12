@@ -13,6 +13,11 @@ const PostBidSchema = new Schema({
     bid_amount: {
         type: Number,
         required: true
+    },
+    user_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
     }
 });
 
