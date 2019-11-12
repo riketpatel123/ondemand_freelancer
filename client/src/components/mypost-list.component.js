@@ -51,7 +51,7 @@ class ShowMyPostList extends Component {
     }
     postList() {
         return this.state.list_of_posts.map(post =>
-            <div class="row post_items" key={post._id}>
+            <div class="card row post_items m-2" key={post._id}>
                 <div class="col-md-12">
                     <div class="bg-white p-4 d-block d-md-flex align-items-center">
                         <div class="mb-4 mb-md-0 mr-5">

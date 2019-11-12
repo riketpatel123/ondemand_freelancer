@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from "react-redux";
+import ReactNotifications from 'react-notifications-component';
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./actions/setAuthToken";
@@ -21,6 +22,8 @@ import ShowMyPostList from "./components/mypost-list.component";
 import ViewPost from "./components/view-post.component";
 import OnDemand from "./components/ondemand.component";
 import OnDemandIndex from "./components/ondemand-index.component";
+import UserProfile from "./components/user-profile.component";
+import ViewUserProfile from "./components/view-userProfile.component";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -47,6 +50,7 @@ class App extends Component {
             <Provider store={store}>
                 <Router>
                     <Navbar />
+                    <ReactNotifications />
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/register" component={Register} />
@@ -58,6 +62,8 @@ class App extends Component {
                         <PrivateRoute path="/update/:id" component={UpdatePost} />
                         <PrivateRoute path="/create" component={CreatePost} />
                         <PrivateRoute path="/view/:id" component={ViewPost} />
+                        <PrivateRoute path="/userprofile" component={UserProfile} />
+                        <PrivateRoute path="/viewprofile/:id" component={ViewUserProfile} />
                     </Switch>
                 </Router>
             </Provider>

@@ -47,7 +47,7 @@ class Navbar extends Component {
                                     </div>
                                     <div className="dropdown-menu dropdown-menu-right dropdown-default"
                                         aria-labelledby="userDropdown">
-                                        <div className="dropdown-item"><i class="far fa-user-circle ml-1"></i> {this.props.auth.user.username}</div>
+                                        <NavLink to={'/userprofile'}><div className="dropdown-item"><i class="far fa-user-circle ml-1"></i> {this.props.auth.user.username}</div></NavLink>
                                         <div className="dropdown-item" onClick={this.onLogoutClick}><i class="fas fa-sign-out-alt"></i> Logout</div>
                                     </div>
                                 </li>

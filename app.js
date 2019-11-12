@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname,"client","build")))
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB, { useNewUrlParser: true })
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('[backend] Database is connected'))
   .catch(err => console.log('[backend] Database connection Error ' + err));
 

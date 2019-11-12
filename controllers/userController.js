@@ -41,7 +41,7 @@ exports.create_user_profile = function (req, res, next) {
 
 exports.view_user_profile = function (req, res, next) {
     const user_id = req.params.user_id;
-    UserProfile.find({ user_id: user_id }, function (err, user_data) {
+    UserProfile.findOne({ user_id: user_id }, function (err, user_data) {
         if (err) {
             res.status(400).send('Failed to load User Profile');
             return next(err);

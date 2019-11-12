@@ -136,7 +136,7 @@ class CreatePost extends Component {
                             />
                         </div>
                         <div className="form-group col-md-2">
-                            <label>Postal_code: </label>
+                            <label>Postal Code: </label>
                             <input type="text"
                                 className="form-control"
                                 name='post_postal_code'
@@ -146,7 +146,7 @@ class CreatePost extends Component {
                             />
                         </div>
                         <div className="form-group col-md-2">
-                            <label>Post_province: </label>
+                            <label>Province: </label>
                             <input type="text"
                                 className="form-control"
                                 name='post_province'
@@ -156,7 +156,7 @@ class CreatePost extends Component {
                             />
                         </div>
                         <div className="form-group col-md-2">
-                            <label>Post_country: </label>
+                            <label>Country: </label>
                             <input type="text"
                                 className="form-control"
                                 name='post_country'
