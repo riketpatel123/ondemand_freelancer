@@ -18,7 +18,7 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         enum: ['Admin', 'Freelancer', 'Employer'],
-        default: 'Admin'
+        default: 'Freelancer'
     }
 });
 

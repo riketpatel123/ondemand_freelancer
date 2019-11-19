@@ -17,6 +17,7 @@ class ViewPost extends Component {
             post_address: '',
             bid_amount: '',
             list_of_bids: [],
+            number_of_bids: 0,
             employer_details: {
                 full_name: '',
                 user_id: '',
@@ -48,7 +49,10 @@ class ViewPost extends Component {
                         + postListResponse.data.province + ", "
                         + postListResponse.data.country
                 });
-                this.setState({ list_of_bids: bidListResponse.data });
+                this.setState({
+                    list_of_bids: bidListResponse.data,
+                    number_of_bids: bidListResponse.data.length
+                });
                 axios.get('/users/userprofile/' + this.state.user_id)
                     .then(response => {
                         this.setState({
@@ -62,7 +66,6 @@ class ViewPost extends Component {
                                 websites: response.data.websites
                             }
                         });
-                        console.log(this.state.employer_details.full_name);
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -74,10 +77,11 @@ class ViewPost extends Component {
     }
     postBidList() {
         return this.state.list_of_bids.map(bid =>
-            <div class="card p-lg-2 m-2">
-                <div class="row" key={bid._id}>
-                    <div class="col">{bid.username}</div>
+            <div class="card p-lg-2 m-2" key={bid._id}>
+                <div class="row pl-4">
+                    <div class="col"><Link to={"/viewprofile/" + bid.user_id}>{bid.username}</Link></div>
                     <div class="col">${bid.bid_amount}</div>
+                    <div class="col"><button className="btn btn-primary">Hire Me</button></div>
                 </div>
             </div>
         )
@@ -90,7 +94,8 @@ class ViewPost extends Component {
         e.preventDefault();
         const newPostBid = {
             username: this.props.auth.user.username,
-            bid_amount: this.state.bid_amount
+            bid_amount: this.state.bid_amount,
+            user_id: this.props.auth.user.id
         };
         axios.post('/post/detail/' + this.props.match.params.id + '/bid', newPostBid)
             .then(res => {
@@ -121,9 +126,9 @@ class ViewPost extends Component {
                             <h6>About the Employer</h6>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title">{this.state.employer_details.full_name}</h4>
+                            <h4 class="card-title"><i class="fas fa-user-tie mr-2 "></i><Link to={"/viewprofile/" + this.state.employer_details.user_id}>{this.state.employer_details.full_name}</Link></h4>
                             <h6>{this.state.employer_details.work_title}</h6>
-                            <p>{this.state.employer_details.work_catagorie}</p>
+                            <small class="badge badge-primary badge-pill p-2">{this.state.employer_details.work_catagorie}</small>
                             <p><i class="fas fa-envelope mr-2"></i>  {this.state.employer_details.email}</p>
                             <p><i class="fas fa-phone mr-2"></i>{this.state.employer_details.contact_number}</p>
                             <p><i class="fas fa-globe-americas mr-2"></i>{this.state.employer_details.websites}</p>
@@ -147,10 +152,9 @@ class ViewPost extends Component {
                             <button type="submit" class="btn btn-primary">PLace Bid</button>
                         </form>
                     </div>
-
                 </div>
-                <h5 className="mt-3">Freelancer Bids on this Post</h5>
-                {this.postBidList()}
+                <h5 className="mt-3">Freelancer Bids on this Post ({this.state.number_of_bids})</h5>
+                <div>{this.postBidList()}</div>
             </div>
         );
     }

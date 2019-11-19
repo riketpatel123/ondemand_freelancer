@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import Moment from 'react-moment';
-
+import { store } from 'react-notifications-component';
+import 'react-notifications-component/dist/theme.css';
 
 class OnDemandList extends Component {
     constructor(props) {
@@ -20,29 +21,56 @@ class OnDemandList extends Component {
                 console.error(error);
             });
     }
+    ShowNotification(message) {
+        store.addNotification({
+            title: 'Database',
+            message: message,
+            type: 'success',
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+                duration: 3000,
+                showIcon: true
+            },
+            width: 250
+        });
+    }
     reviewRequest(request_id) {
         console.log(request_id);
-        alert(request_id);
+        var requestObj = {
+            request_status: "Confirmed",
+            confirm_freelancer_id: this.props.auth.user.id
+        }
+        axios.post("/request/ondemand/confirm/" + request_id, requestObj)
+            .then(response => {
+                this.ShowNotification(response.data.message);
+                this.componentWillMount();
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     }
     render() {
         return (
             <div className="container">
                 <h5 className="mt-2">OnDemand Index:</h5>
                 {this.state.list_of_requests.map(request =>
-                            <div class="item" key={request._id}>
-                            <div class="d-flex flex-row flex-wrap">
-                                <div class="d-flex align-items-start flex-column p-2">
-                                    <div class="h4">{request.request_catagorie}</div>
-                                    <div class="d-flex justify-content-start">
-                                        <div class="p-2 pr-2">{request.user_id}</div>
-                                        <div class="p-2"><i class="far fa-clock amber-text pr-2"></i> <Moment format="MMMM DD, YYYY">{request.request_date}</Moment></div>
-                                        <div class="p-2"><i class="fas fa-map-marker-alt pr-2"></i> {request.request_status}</div>
-                                    </div>
+                    <div class="item" key={request._id}>
+                        <div class="d-flex flex-row flex-wrap">
+                            <div class="d-flex align-items-start flex-column p-2">
+                                <div class="h4">{request.request_catagorie}</div>
+                                <div class="d-flex justify-content-start row">
+                                <div class="p-2 pr-2 column"><i class="fas fa-user-tie mr-1"></i>{request.username}</div>
+                                    <div class="p-2 column"><i class="far fa-clock amber-text pr-2"></i> <Moment format="MMMM DD, YYYY">{request.request_date}</Moment></div>
+                                    <div class="p-2 column"><i class="fas fa-map-marker-alt pr-2"></i> {request.request_status}</div>
                                 </div>
-                                <div class="p-2 ml-auto align-self-center"><a onClick={() => this.reviewRequest(request._id)} class="btn btn-secondary">Apply</a></div>
                             </div>
+                            <div class="p-2 ml-auto align-self-center"><a onClick={() => this.reviewRequest(request._id)} class="btn btn-secondary">Apply</a></div>
                         </div>
-                        )}
+                    </div>
+                )}
             </div>
         );
     }

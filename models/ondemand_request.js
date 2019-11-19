@@ -7,6 +7,9 @@ const OndemandRequestSchema = new Schema({
         ref: 'users',
         required: true
     },
+    username: {
+        type: String
+    },
     request_catagorie: {
         type: String,
         required: true

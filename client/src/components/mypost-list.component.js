@@ -11,8 +11,7 @@ class ShowMyPostList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list_of_posts: [],
-            postMessage: ''
+            list_of_posts: []
         };
     }
     componentDidMount() {
@@ -21,7 +20,7 @@ class ShowMyPostList extends Component {
         };
         axios.post("/post/view/", userObj)
             .then(response => {
-                this.setState({ list_of_posts: response.data });
+                this.setState({ list_of_posts: response.data});
             })
             .catch(function (error) {
                 console.log(error);
@@ -36,16 +35,7 @@ class ShowMyPostList extends Component {
     deletePost(post_id) {
         axios.get('/post/delete/' + post_id)
             .then(response => {
-                const userObj = {
-                    user_id: this.props.auth.user.id,
-                };
-                axios.post("/post/view/", userObj)
-                    .then(response => {
-                        this.setState({
-                            postMessage: 'Post Deleted',
-                            list_of_posts: response.data
-                        });
-                    })
+                this.componentDidMount();
             })
             .catch(err => console.log(err));
     }
@@ -56,7 +46,7 @@ class ShowMyPostList extends Component {
                     <div class="bg-white p-4 d-block d-md-flex align-items-center">
                         <div class="mb-4 mb-md-0 mr-5">
                             <div class="d-flex align-items-center">
-                                <h2 class="mr-3 text-black h3"><Link to={"/view/" + post._id}>{post.post_title}</Link></h2>
+                                <h2 class="mr-3 text-black"><Link to={"/view/" + post._id}>{post.post_title}</Link></h2>
                                 <div class="badge-wrap">
                                     <span class="bg-primary text-white badge">{post.post_catagories}</span>
                                 </div>
@@ -70,7 +60,7 @@ class ShowMyPostList extends Component {
                         <div class="ml-auto d-flex">
                             <Moment format="DD/MM/YYYY" className="mr-2">{post.post_date}</Moment>
                             <div><Link to={"/update/" + post._id} className="btn btn-primary mr-2">Edit</Link>
-                            <button onClick={() => this.deletePost(post._id)} className="btn btn-danger">Delete</button></div>
+                                <button onClick={() => this.deletePost(post._id)} className="btn btn-danger">Delete</button></div>
                         </div>
                     </div>
                 </div>

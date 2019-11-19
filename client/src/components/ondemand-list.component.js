@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 
 
@@ -10,6 +11,7 @@ class OnDemandList extends Component {
         this.state = {
             list_of_requests: [],
             request_details: {},
+            confirmedUser: ""
         }
     }
     componentWillMount() {
@@ -36,11 +38,19 @@ class OnDemandList extends Component {
             .catch(err => console.log(err))
     }
     reviewRequest(request_id) {
-        console.log(request_id);
         document.getElementById("reviewPanel").style.display = "block";
         axios.get('/request/ondemand/user_list/review/' + request_id)
             .then(response => {
                 this.setState({ request_details: response.data });
+                axios.get('/users/userprofile/' + this.state.request_details.confirm_freelancer_id)
+                    .then(response => {
+                        this.setState({
+                            confirmedUser: response.data.full_name
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }).catch(function (error) {
                 console.error(error);
             });
@@ -64,13 +74,13 @@ class OnDemandList extends Component {
                                 <td>{request.request_catagorie} </td>
                                 <td><Moment format="MMMM DD, YYYY">{request.request_date}</Moment></td>
                                 <td>{request.request_status} </td>
-                                <td><a onClick={() => this.deleteRequest(request._id)}>Delete</a> | <a class="hoverable" onClick={() => this.reviewRequest(request._id)}>Review</a></td>
+                                <td><a className='text-primary' onClick={() => this.deleteRequest(request._id)}>Delete</a> | <a class="hoverable text-primary" onClick={() => this.reviewRequest(request._id)}>Review</a></td>
                             </tr>
                         )}
                         <tr>
-                            <td colspan="4"><div class="reviewPanel" id="reviewPanel"><h4>Review Panel:</h4><br/> Request {this.state.request_details.request_status}: {this.state.request_details.request_catagorie} |
+                            <td colspan="4"><div class="reviewPanel" id="reviewPanel"><h4>Review Panel:</h4><br /> Request {this.state.request_details.request_status}: {this.state.request_details.request_catagorie} |
                                     Date: <Moment format="MMMM DD, YYYY">{this.state.request_details.request_date}</Moment> |
-                                    User: {this.state.request_details.confirm_freelancer_id}</div>
+                                    User: <Link className="text-primary" to={"/viewprofile/" +  this.state.request_details.confirm_freelancer_id}>{this.state.confirmedUser}</Link></div>
                             </td>
                         </tr>
                     </tbody>

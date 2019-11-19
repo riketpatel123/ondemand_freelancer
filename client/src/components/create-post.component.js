@@ -68,83 +68,94 @@ class CreatePost extends Component {
                 <h6>Freelancer > Create New Post</h6>
                 <h3>Enter New Post Details</h3>
                 <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Title: </label>
-                        <input type="text"
-                            className="form-control"
-                            name='post_title'
-                            value={this.state.post_title}
-                            onChange={this.onChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label for="post_description">Description: </label>
-                        <textarea type="text"
-                            id="post_description"
-                            className="form-control"
-                            name='post_description'
-                            value={this.state.post_description}
-                            onChange={this.onChange}
-                            placeholder="Description"
-                            required
-                        />
-                    </div>
                     <div className="form-row">
-
-                        <div className="form-group col-md-6">
-                            <label>Catagories: </label>
-                            <select class="form-control" name='post_catagories' value={this.state.post_catagories}
-                                onChange={this.onChange}>
-                                <option>Choose Category</option>
-                                <option value="Information Technology">Information Technology</option>
-                                <option value="Mechanical">Mechanical</option>
-                                <option value="Hardware">Hardware</option>
-                                <option value="Electrical">Electrical</option>
-                            </select>
+                        <div className="col-lg-6">
+                            <div className="form-group">
+                                <label>Title: </label>
+                                <input type="text"
+                                    className="form-control"
+                                    name='post_title'
+                                    value={this.state.post_title}
+                                    onChange={this.onChange}
+                                    placeholder="Title"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label for="post_description">Description: </label>
+                                <textarea type="text"
+                                    id="post_description"
+                                    className="form-control"
+                                    name='post_description'
+                                    value={this.state.post_description}
+                                    onChange={this.onChange}
+                                    placeholder="Description"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Catagories: </label>
+                                <select class="form-control" name='post_catagories' value={this.state.post_catagories}
+                                    onChange={this.onChange}>
+                                    <option>Choose Category</option>
+                                    <option value="Informatio-lgn Technology">Information Technology</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Hardware">Hardware</option>
+                                    <option value="Electrical">Electrical</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="form-group col-md-6">
-                            <label>Budget: </label>
+                        <div className="form-group col-lg-6 d-flex align-items-center">
+                            <label className="m-lg-5 mr-2">Budget: </label>
+                            <i class="fas fa-dollar-sign mr-1"></i>
                             <input type="number"
                                 className="form-control"
                                 name='post_budget'
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
+                                placeholder="Budget"
                                 required
                             />
                         </div>
                     </div>
-                    <div className="form-group">
-                        <label>Address: </label>
-                        <input type="text"
-                            className="form-control"
-                            name='post_address'
-                            value={this.state.post_address}
-                            onChange={this.onChange}
-                            required
-                        />
-                    </div>
+                    <h6>Additional Information:</h6>
+                    <div className="border border-primary p-3">
                     <div className="form-row">
-                        <div className="form-group col-md-4">
+                        <div className="form-group col-lg-6 col-md-6">
+                            <label>Address: </label>
+                            <input type="text"
+                                className="form-control"
+                                name='post_address'
+                                value={this.state.post_address}
+                                onChange={this.onChange}
+                                placeholder="Address"
+                                required
+                            />
+                        </div>
+                        <div className="form-group col-lg-2 col-md-2">
                             <label>City: </label>
                             <input type="text"
                                 className="form-control"
                                 name='post_city'
                                 value={this.state.post_city}
                                 onChange={this.onChange}
+                                placeholder="City"
                                 required
                             />
                         </div>
-                        <div className="form-group col-md-2">
+                        <div className="form-group col-lg-2 col-md-2">
                             <label>Postal Code: </label>
                             <input type="text"
                                 className="form-control"
                                 name='post_postal_code'
                                 value={this.state.post_postal_code}
                                 onChange={this.onChange}
+                                placeholder="Postal Code"
                                 required
                             />
                         </div>
+                    </div>
+                    <div className="form-row">
                         <div className="form-group col-md-2">
                             <label>Province: </label>
                             <input type="text"
@@ -152,6 +163,7 @@ class CreatePost extends Component {
                                 name='post_province'
                                 value={this.state.post_province}
                                 onChange={this.onChange}
+                                placeholder="Province"
                                 required
                             />
                         </div>
@@ -162,9 +174,11 @@ class CreatePost extends Component {
                                 name='post_country'
                                 value={this.state.post_country}
                                 onChange={this.onChange}
+                                placeholder="Country"
                                 required
                             />
                         </div>
+                    </div>
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Create New Post" className="btn btn-primary" />

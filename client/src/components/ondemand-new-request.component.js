@@ -31,6 +31,7 @@ class OnDemand extends Component {
         e.preventDefault();
         const obj = {
             user_id: this.props.auth.user.id,
+            username: this.props.auth.user.username,
             request_catagorie: this.state.catagories,
             request_date: this.state.selectedDay,
         };

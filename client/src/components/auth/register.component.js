@@ -6,19 +6,23 @@ import { registerUser } from "../../actions/authActions";
 class Register extends Component {
     constructor() {
         super();
+        this.handleOptionChange = this.handleOptionChange.bind(this);
         this.state = {
             username: "",
             email: "",
             password: "",
             password2: "",
-            errors: {}
+            errors: {},
+            userType: "Freelancer"
         };
     }
     componentDidMount() {
-        // If logged in and user navigates to Register page, should redirect them to dashboard
         if (this.props.auth.isAuthenticated) {
             this.props.history.push("/browse");
         }
+    }
+    handleOptionChange(e) {
+        this.setState({ userType: e.target.value });
     }
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
@@ -29,9 +33,9 @@ class Register extends Component {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password,
-            password2: this.state.password2
+            password2: this.state.password2,
+            user_type: this.state.userType
         };
-        console.log(userData);
         this.props.registerUser(userData, this.props.history);
     };
     componentWillReceiveProps(nextProps) {
@@ -60,7 +64,7 @@ class Register extends Component {
                         </div>
                     </div>
                     <div class="row m-3 p-2">
-                        <form className onSubmit={this.onRegister}>
+                        <form onSubmit={this.onRegister}>
                             <div class="form-row">
                                 <div class="form-group  col-md-6">
                                     <label for="username">Username</label>
@@ -111,6 +115,23 @@ class Register extends Component {
                                         type="password"
                                     />
                                     <span class="red-text">{errors.password2}</span>
+                                </div>
+
+                            </div>
+                            <div className="form-row">
+                                <div className="radio">
+                                    <label>
+                                        <input className="mr-2" type="radio" value="Freelancer" checked={this.state.userType === 'Freelancer'}
+                                            onChange={this.handleOptionChange} />
+                                        Freelancer
+                                    </label>
+                                </div>
+                                <div className="radio">
+                                    <label>
+                                        <input className="ml-2"  type="radio" value="Employer" checked={this.state.userType === 'Employer'}
+                                            onChange={this.handleOptionChange} />
+                                        Employer
+                                    </label>
                                 </div>
                             </div>
                             <button

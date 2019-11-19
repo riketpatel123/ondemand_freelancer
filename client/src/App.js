@@ -24,6 +24,7 @@ import OnDemand from "./components/ondemand.component";
 import OnDemandIndex from "./components/ondemand-index.component";
 import UserProfile from "./components/user-profile.component";
 import ViewUserProfile from "./components/view-userProfile.component";
+import About from "./components/about.component";
 
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
@@ -55,6 +56,7 @@ class App extends Component {
                         <Route exact path="/" component={Home} />
                         <Route path="/register" component={Register} />
                         <Route path="/login" component={Login} />
+                        <Route path="/about" component={About} />
                         <PrivateRoute path="/browse" component={ShowPostList} />
                         <PrivateRoute path="/mylist" component={ShowMyPostList} />
                         <PrivateRoute path="/ondemand/inbox" component={OnDemandIndex} />

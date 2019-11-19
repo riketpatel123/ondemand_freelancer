@@ -11,7 +11,7 @@ class ShowPostList extends Component {
         super(props);
         this.state = {
             list_of_posts: [],
-            postMessage: ''
+            isLoading: true
         };
     }
     componentDidMount() {
@@ -28,10 +28,18 @@ class ShowPostList extends Component {
         e.preventDefault();
         this.props.logoutUser();
     };
+    deletePost(post_id) {
+        axios.get('/post/delete/' + post_id)
+            .then(response => {
+                this.componentDidMount();
+            })
+            .catch(err => console.log(err));
+    }
     postList() {
+        var isAdmin = (this.props.auth.user.user_type === "Admin");
         return this.state.list_of_posts.map(post =>
             <div class="card row post_items m-2" key={post._id}>
-                <div class="col-md-12 col-sm">
+                <div class="col-md-12">
                     <div class="bg-white p-4 d-block d-md-flex align-items-center">
                         <div class="mb-4 mb-md-0 mr-5">
                             <div class="d-flex align-items-center">
@@ -46,7 +54,11 @@ class ShowPostList extends Component {
                         </div>
                         <div class="ml-auto d-flex text-center">
                             <Moment format="DD/MM/YYYY" className="mr-2">{post.post_date}</Moment>
-                            <div><Link to={"/view/" + post._id} className="btn btn-dark mr-2">Bid Now</Link></div>
+                            <div><Link to={"/view/" + post._id} className="btn btn-dark mr-2">Bid Now</Link>
+                                {isAdmin ? (
+                                    <button onClick={() => this.deletePost(post._id)} className="btn btn-danger ml-1">Delete</button>
+                                ) : (<p></p>)}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +68,7 @@ class ShowPostList extends Component {
     render() {
         return (
             <div className="container">
-                <h6>Freelancer  > Browse All Jobs </h6>
+                <h6 className="mb-3">Freelancer  > Browse All Jobs </h6>
                 {this.postList()}
             </div>
         );

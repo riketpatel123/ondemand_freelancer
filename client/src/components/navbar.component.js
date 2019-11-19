@@ -15,7 +15,7 @@ class Navbar extends Component {
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark primary-color">
-                    <NavLink to={'/'} className="navbar-brand">Freelancing</NavLink>
+                    <NavLink to={'/browse'} className="navbar-brand">Freelancing</NavLink>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -34,21 +34,24 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <NavLink to={'/mylist'} className="nav-link">My Posts</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink to={'/about'} className="nav-link">About</NavLink>
+                            </li>
                         </ul>
-                        <div class="my-2 my-lg-0 ml-auto">
+                        <div className="my-2 my-lg-0 ml-auto">
                             <NavLink to={'/create'} className="btn btn-dark nav-link">New Post</NavLink>
                         </div>
                         {isLogin ? (
-                            <ul className="navbar-nav ml-1 nav-flex-icons">
+                            <ul className="navbar-nav ml-lg-1 ml-sm-5 nav-flex-icons">
                                 <li className="nav-item dropdown">
-                                    <div className="nav-link dropdown-toggle" id="userDropdown" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i className="fas fa-user"></i>
+                                    <div className="nav-link dropdown-toggle mr-5" data-toggle="dropdown">  
+                                        <i className="far fa-user-circle ml-1"></i> {this.props.auth.user.username}
                                     </div>
-                                    <div className="dropdown-menu dropdown-menu-right dropdown-default"
+                                    <div className="dropdown-menu"
                                         aria-labelledby="userDropdown">
-                                        <NavLink to={'/userprofile'}><div className="dropdown-item"><i class="far fa-user-circle ml-1"></i> {this.props.auth.user.username}</div></NavLink>
-                                        <div className="dropdown-item" onClick={this.onLogoutClick}><i class="fas fa-sign-out-alt"></i> Logout</div>
+                                        <NavLink className="dropdown-item mr-2" to={"/viewprofile/" + this.props.auth.user.id}>View Profile</NavLink>
+                                        <NavLink className="dropdown-item mr-2" to={'/userprofile'}>Update Profile</NavLink>
+                                        <div className="dropdown-item" onClick={this.onLogoutClick}>Logout</div>
                                     </div>
                                 </li>
                             </ul>

@@ -82,7 +82,7 @@ exports.update_ondemand_request = function (req, res, next) {
             request_data.save()
             .then(request_data => {
                 console.log("[backend] INFO: Update Request: ",request_data);
-                res.status(201).send({ message: 'Request in update successfully' });
+                res.status(201).json({ message: 'Request in update successfully' });
             })
             .catch(err => {
                 console.error('[backend] Update Error:', err);
