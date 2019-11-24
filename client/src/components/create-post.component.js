@@ -24,7 +24,6 @@ class CreatePost extends Component {
     }
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-
     }
     onSubmit(e) {
         e.preventDefault();
@@ -114,71 +113,74 @@ class CreatePost extends Component {
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
                                 placeholder="Budget"
+                                max="10"
                                 required
                             />
                         </div>
                     </div>
                     <h6>Additional Information:</h6>
                     <div className="border border-primary p-3">
-                    <div className="form-row">
-                        <div className="form-group col-lg-6 col-md-6">
-                            <label>Address: </label>
-                            <input type="text"
-                                className="form-control"
-                                name='post_address'
-                                value={this.state.post_address}
-                                onChange={this.onChange}
-                                placeholder="Address"
-                                required
-                            />
+                        <div className="form-row">
+                            <div className="form-group col-lg-6 col-md-6">
+                                <label>Address: </label>
+                                <input type="text"
+                                    id="AutoAddress"
+                                    className="form-control"
+                                    name='post_address'
+                                    value={this.state.post_address}
+                                    onChange={this.onChange}
+                                    placeholder="Address"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-lg-2 col-md-2">
+                                <label>City: </label>
+                                <input type="text"
+                                    className="form-control"
+                                    name='post_city'
+                                    value={this.state.post_city}
+                                    onChange={this.onChange}
+                                    placeholder="City"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-lg-2 col-md-2">
+                                <label>Postal Code: </label>
+                                <input type="text"
+                                    className="form-control"
+                                    name='post_postal_code'
+                                    value={this.state.post_postal_code}
+                                    onChange={this.onChange}
+                                    placeholder="Postal Code"
+                                    maxlength="6"
+                                    required
+                                />
+                            </div>
                         </div>
-                        <div className="form-group col-lg-2 col-md-2">
-                            <label>City: </label>
-                            <input type="text"
-                                className="form-control"
-                                name='post_city'
-                                value={this.state.post_city}
-                                onChange={this.onChange}
-                                placeholder="City"
-                                required
-                            />
+                        <div className="form-row">
+                            <div className="form-group col-md-2">
+                                <label>Province: </label>
+                                <input type="text"
+                                    className="form-control"
+                                    name='post_province'
+                                    value={this.state.post_province}
+                                    onChange={this.onChange}
+                                    placeholder="Province"
+                                    required
+                                />
+                            </div>
+                            <div className="form-group col-md-2">
+                                <label>Country Code: </label>
+                                <input type="text"
+                                    className="form-control"
+                                    name='post_country'
+                                    value={this.state.post_country}
+                                    onChange={this.onChange}
+                                    placeholder="Country"
+                                    required
+                                />
+                            </div>
                         </div>
-                        <div className="form-group col-lg-2 col-md-2">
-                            <label>Postal Code: </label>
-                            <input type="text"
-                                className="form-control"
-                                name='post_postal_code'
-                                value={this.state.post_postal_code}
-                                onChange={this.onChange}
-                                placeholder="Postal Code"
-                                required
-                            />
-                        </div>
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-md-2">
-                            <label>Province: </label>
-                            <input type="text"
-                                className="form-control"
-                                name='post_province'
-                                value={this.state.post_province}
-                                onChange={this.onChange}
-                                placeholder="Province"
-                                required
-                            />
-                        </div>
-                        <div className="form-group col-md-2">
-                            <label>Country: </label>
-                            <input type="text"
-                                className="form-control"
-                                name='post_country'
-                                value={this.state.post_country}
-                                onChange={this.onChange}
-                                placeholder="Country"
-                                required
-                            />
-                        </div>
-                    </div>
                     </div>
                     <div className="form-group">
                         <input type="submit" value="Create New Post" className="btn btn-primary" />

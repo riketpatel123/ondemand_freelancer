@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
 
-
 class OnDemandList extends Component {
     constructor(props) {
         super(props)
@@ -42,15 +41,21 @@ class OnDemandList extends Component {
         axios.get('/request/ondemand/user_list/review/' + request_id)
             .then(response => {
                 this.setState({ request_details: response.data });
-                axios.get('/users/userprofile/' + this.state.request_details.confirm_freelancer_id)
-                    .then(response => {
-                        this.setState({
-                            confirmedUser: response.data.full_name
-                        });
-                    })
-                    .catch(function (error) {
-                        console.log(error);
+                if (this.state.request_details.confirm_freelancer_id == undefined) {
+                    this.setState({
+                        confirmedUser: "Not Confirmed"
                     });
+                } else {
+                    axios.get('/users/userprofile/' + this.state.request_details.confirm_freelancer_id)
+                        .then(response => {
+                            this.setState({
+                                confirmedUser: response.data.full_name
+                            });
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
             }).catch(function (error) {
                 console.error(error);
             });
@@ -58,7 +63,7 @@ class OnDemandList extends Component {
     render() {
         return (
             <div>
-                <h5 className="mt-2 text-center">My OnDemand Requests</h5>
+                <h5 className="mt-2 text-center">My OnDemand Requests List</h5>
                 <table class="table">
                     <thead>
                         <tr>
@@ -78,9 +83,15 @@ class OnDemandList extends Component {
                             </tr>
                         )}
                         <tr>
-                            <td colspan="4"><div class="reviewPanel" id="reviewPanel"><h4>Review Panel:</h4><br /> Request {this.state.request_details.request_status}: {this.state.request_details.request_catagorie} |
-                                    Date: <Moment format="MMMM DD, YYYY">{this.state.request_details.request_date}</Moment> |
-                                    User: <Link className="text-primary" to={"/viewprofile/" +  this.state.request_details.confirm_freelancer_id}>{this.state.confirmedUser}</Link></div>
+                            <td colspan="4">
+                                <div className="reviewPanel" id="reviewPanel">
+                                    <h4>Review Panel:</h4><br />
+                                    <div className="card p-3">
+                                        <h6>Request <strong>{this.state.request_details.request_status}</strong>: {this.state.request_details.request_catagorie}</h6>
+                                        <p>Date: <Moment format="MMMM DD, YYYY">{this.state.request_details.request_date}</Moment></p>
+                                        <p>User: <Link className="text-primary" to={"/viewprofile/" + this.state.request_details.confirm_freelancer_id}>{this.state.confirmedUser}</Link></p>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
