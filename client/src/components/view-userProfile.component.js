@@ -76,10 +76,13 @@ class ViewUserProfile extends Component {
                     contact_number: profileResponse.data.contact_number,
                     websites: profileResponse.data.websites,
                     profile_photo: profileResponse.data.profile_photo,
-                    list_of_reviews: reviewResponse.data,
-                    review_count: reviewResponse.data.length
                 });
-
+                if(reviewResponse.data !== "No Reviews Found"){
+                    this.setState({
+                        list_of_reviews: reviewResponse.data,
+                        review_count: reviewResponse.data.length
+                    });
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -143,6 +146,7 @@ class ViewUserProfile extends Component {
                                         <strong class="h5 d-block text-secondary font-weight-bold mb-1">{this.state.work_catagorie}</strong>
                                     </div>
                                 </div>
+                                <Link className="btn btn-primary" to={"/message/" + this.props.match.params.id}>Message</Link>
                             </section>
                         </div>
                     </div>

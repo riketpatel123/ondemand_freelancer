@@ -34,7 +34,9 @@ class Register extends Component {
             username: this.state.username,
             password: this.state.password,
             password2: this.state.password2,
-            user_type: this.state.userType
+            user_type: this.state.userType,
+            squestion: this.state.squestion,
+            sanswer: this.state.sanswer
         };
         this.props.registerUser(userData, this.props.history);
     };
@@ -116,7 +118,34 @@ class Register extends Component {
                                     />
                                     <span class="red-text">{errors.password2}</span>
                                 </div>
-
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group  col-md-6">
+                                    <label for="squestion">Security Question</label>
+                                    <input
+                                        class="form-control"
+                                        onChange={this.onChange}
+                                        value={this.state.squestion}
+                                        error={errors.squestion}
+                                        id="squestion"
+                                        placeholder="Enter security question?"
+                                        type="text"
+                                    />
+                                    <span class="red-text">{errors.squestion}</span>
+                                </div>
+                                <div class="form-group  col-md-6">
+                                    <label for="sanswer">Answer</label>
+                                    <input
+                                        class="form-control"
+                                        onChange={this.onChange}
+                                        value={this.state.sanswer}
+                                        error={errors.sanswer}
+                                        id="sanswer"
+                                        placeholder="Answer"
+                                        type="text"
+                                    />
+                                    <span class="red-text">{errors.sanswer}</span>
+                                </div>
                             </div>
                             <div className="form-row">
                                 <div className="radio">

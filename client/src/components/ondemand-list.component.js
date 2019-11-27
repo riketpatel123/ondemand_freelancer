@@ -41,7 +41,7 @@ class OnDemandList extends Component {
         axios.get('/request/ondemand/user_list/review/' + request_id)
             .then(response => {
                 this.setState({ request_details: response.data });
-                if (this.state.request_details.confirm_freelancer_id == undefined) {
+                if (this.state.request_details.confirm_freelancer_id === undefined) {
                     this.setState({
                         confirmedUser: "Not Confirmed"
                     });

@@ -37,6 +37,9 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <NavLink to={'/about'} className="nav-link">About</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink to={'/message/'+ this.props.auth.user.id} className="nav-link">Message</NavLink>
+                            </li>
                         </ul>
                         <div className="my-2 my-lg-0 ml-auto">
                             <NavLink to={'/create'} className="btn btn-dark nav-link">New Post</NavLink>

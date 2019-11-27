@@ -27,4 +27,7 @@ router.post('/detail/:id/bid',post_controller.submit_user_bid);
 /** Get all bid on the post  */
 router.get('/detail/bid/:post_id',post_controller.get_all_post_bid);
 
+/** Confirm Request of freelancer on work post*/
+router.post('/confirm/:id',post_controller.work_post_confirm);
+
 module.exports = router;

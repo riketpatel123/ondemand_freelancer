@@ -3,9 +3,9 @@ var PostBid = require('../models/post_bid');
 const isEmpty = require("is-empty");
 
 var async = require('async');
-
+/**Browse All the Work Post */
 exports.browse_all_post = function (req, res, next) {
-    Post.find(function (err, post_list) {
+    Post.find({ confirm_freelancer: null },function (err, post_list) {
         if (err) {
             console.log("[backend] ERROR: ".err);
             return next(err);
@@ -14,7 +14,7 @@ exports.browse_all_post = function (req, res, next) {
         }
     });
 };
-/** Get all job post by user id */
+/** Get Work post by user id */
 exports.post_list = function (req, res, next) {
     const current_user = req.body.user_id;
     Post.find({ user_id: current_user }, function (err, post_list) {
@@ -25,17 +25,17 @@ exports.post_list = function (req, res, next) {
         }
     });
 };
-// Handle book create on POST.
+/** Create new work post */ 
 exports.job_post_create_post = function (req, res) {
     var post = new Post(req.body);
     post.save()
         .then(post => {
             console.log("[backend] INFO: New Post: ",post);
-            res.status(201).json({ message: 'Post in   added successfully' });
+            res.status(201).json({ message: 'Post is added successfully' });
         })
         .catch(error => {
             console.error("[backend] ERROR: ", error);
-            res.status(400).send('Insert New Post Failed');
+            res.status(400).send('Create New Post Failed');
         });
 };
 /**Get single post detail */
@@ -73,7 +73,7 @@ exports.job_post_update_post = function (req, res) {
             post_data.save()
             .then(post_data => {
                 console.log("[backend] INFO: Update Post: ",post_data);
-                res.status(201).send({ message: 'Post in update successfully' });
+                res.status(201).send({ message: 'Work Post update successfully' });
             })
             .catch(err => {
                 console.error('[backend] Update Error:', err);
@@ -98,7 +98,7 @@ exports.job_post_delete_post = function (req, res, next) {
     });
 };
 
-/**Submit bid on user selected post */
+/** Submit bid on user selected post */
 exports.submit_user_bid = function (req, res) {
     PostBid.findOne({ username: req.body.username, post_id: req.params.id }).then(currentBid => {
         if (currentBid) {
@@ -141,3 +141,24 @@ exports.get_all_post_bid = function (req, res) {
         res.status(200).json(post_bids);
     });
 }
+
+/* Confirm Freelancer on the work post */
+exports.work_post_confirm = function (req, res) {
+    Post.findById(req.params.id, function (err, post_data) {
+        if (!post_data) {
+            console.log("[backend] INFO: Post Not Found",);
+            res.status(404).send("Post Not Found!");
+        } else {
+            post_data.confirm_freelancer = req.body.confirm_freelancer;
+            post_data.save()
+            .then(post_data => {
+                console.log("[backend] INFO: Update Post: ",post_data);
+                res.status(201).send({ message: 'Freelancer Confirmed' });
+            })
+            .catch(err => {
+                console.error('[backend] Update Error:', err);
+                res.status(400).send("Unable to update the database");
+            });
+        }
+    });
+};

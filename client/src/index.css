@@ -39,3 +39,6 @@ code {
 #intro{
     height: 100%;
 }
+#homePage{
+    margin-top: -100px !important;
+}

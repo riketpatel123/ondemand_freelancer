@@ -23,11 +23,7 @@ class ShowPostList extends Component {
                 console.log(error);
             });
     }
-    /**User Logout */
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
+    /** Method to Delete Work Post */
     deletePost(post_id) {
         axios.get('/post/delete/' + post_id)
             .then(response => {
@@ -35,6 +31,7 @@ class ShowPostList extends Component {
             })
             .catch(err => console.log(err));
     }
+    /** Method to list the work post */
     postList() {
         var isAdmin = (this.props.auth.user.user_type === "Admin");
         return this.state.list_of_posts.map(post =>
@@ -42,19 +39,24 @@ class ShowPostList extends Component {
                 <div class="col-md-12">
                     <div class="bg-white p-4 d-block d-md-flex align-items-center">
                         <div class="mb-4 mb-md-0 mr-5">
-                            <div class="d-flex align-items-center">
+                            <div class="d-flex align-items-center row">
                                 <h2 class="mr-3 text-black"><Link to={"/view/" + post._id}>{post.post_title}</Link></h2>
-                                <span class="badge badge-primary badge-pill p-2">{post.post_catagories}</span>
-                                <div class="ml-lg-4"><i class="far fa-money-bill-alt"></i> {post.post_budget}</div>
+                                <div class="ml-lg-4">Budget: <i class="fas fa-dollar-sign ml-1 fa-1x"></i>{post.post_budget}</div>
                             </div>
-                            <div class="d-block d-md-flex">
-                                <p class="mr-3 overflow ellipsis">{post.post_description} </p>
+                            <div class="d-block d-md-flex row">
+                                <div id="description" className="overflow ellipsis">{post.post_description}</div>
                             </div>
-                            <div><i class="fas fa-map-marker-alt"></i><span> {post.province}, {post.country}</span></div>
+                            <div className="mt-2">
+                                <span class="badge badge-primary badge-pill p-2 mr-2">
+                                    <i class="fas fa-tag mr-2" style={{ color: "white" }}></i>{post.post_catagories}
+                                </span>
+                                <i class="fas fa-map-marker-alt"></i><span> {post.province}, {post.country}</span>
+                            </div>
                         </div>
                         <div class="ml-auto d-flex text-center">
                             <Moment format="DD/MM/YYYY" className="mr-2">{post.post_date}</Moment>
-                            <div><Link to={"/view/" + post._id} className="btn btn-dark mr-2">Bid Now</Link>
+                            <div>
+                                {(this.props.auth.user.id !== post.user_id) ? (<Link to={"/view/" + post._id} className="btn btn-dark mr-2">Bid Now</Link>) : (<p></p>)}
                                 {isAdmin ? (
                                     <button onClick={() => this.deletePost(post._id)} className="btn btn-danger ml-1">Delete</button>
                                 ) : (<p></p>)}
@@ -68,7 +70,7 @@ class ShowPostList extends Component {
     render() {
         return (
             <div className="container">
-                <h6 className="mb-3">Freelancer  > Browse All Jobs </h6>
+                <h6 className="mb-3">Freelancer  > Browse All Posts </h6>
                 {this.postList()}
             </div>
         );

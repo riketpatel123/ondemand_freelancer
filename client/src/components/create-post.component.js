@@ -77,6 +77,7 @@ class CreatePost extends Component {
                                     value={this.state.post_title}
                                     onChange={this.onChange}
                                     placeholder="Title"
+                                    maxlength="50" 
                                     required
                                 />
                             </div>
@@ -97,11 +98,21 @@ class CreatePost extends Component {
                                 <select class="form-control" name='post_catagories' value={this.state.post_catagories}
                                     onChange={this.onChange}>
                                     <option>Choose Category</option>
-                                    <option value="Informatio-lgn Technology">Information Technology</option>
-                                    <option value="Mechanical">Mechanical</option>
-                                    <option value="Hardware">Hardware</option>
-                                    <option value="Electrical">Electrical</option>
-                                </select>
+                                    <option value="Automotive">Automotive</option>
+                                    <option value="Agriculture">Agriculture/Farming</option>
+                                    <option value="Cleaning">Cleaning</option>
+                                    <option value="Construction">Construction/ Facilities</option>
+                                    <option value="Customer Service">Customer Service</option>
+                                    <option value="Finance">Accounting/ Finanace</option>
+                                    <option value="Food Service">Restaurant / Food Service</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Multimedia">Desgin, Art &amp; Multimedia</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Volunteer">Volunteer</option>
+                                    <option value="Warehouse">Warehouse</option>
+                                    <option value="Other">Other</option>
+                                  </select>
                             </div>
                         </div>
                         <div className="form-group col-lg-6 d-flex align-items-center">

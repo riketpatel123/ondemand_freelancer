@@ -17,8 +17,14 @@ class OnDemand extends Component {
         this.state = {
             catagories: '',
             selectedDay: undefined,
-            errors:{},
-            redirect: false
+            errors: {},
+            redirect: false,
+            catlist: ["Warehouse Associate", "Electrician", "Machinist", "Painter", "Moving Help",
+                "Plumber", "Sales Representative", "Fitter Welder", "General Labour",
+                "Food Packaging", "Customer Representative", "Kitchen Assistant", "Registered Nurse",
+                "Volunteer", "Garbage Disposal", "HouseKeeper", "Front Desk Receptionist",
+                "Supervisor", "Automotive Technician", "Constructor Worker", "Cleaner", "Driver", "Home Repair Services",
+                "Locks Service", "Air Conditioner Service", "Lawn Care", "Flooring", "Roofing"]
         }
     }
     handleDayChange(day) {
@@ -35,16 +41,16 @@ class OnDemand extends Component {
             request_catagorie: this.state.catagories,
             request_date: this.state.selectedDay,
         };
-        if(obj.request_catagorie !== ""){
-            this.setState({errors:{}});
+        if (obj.request_catagorie !== "") {
+            this.setState({ errors: {} });
             axios.post('/request/ondemand/create', obj)
-            .then(response => {
-                console.log(response.data);
-                this.setState({ redirect: true })
-            });
-        }else{
+                .then(response => {
+                    console.log(response.data);
+                    this.setState({ redirect: true })
+                });
+        } else {
             this.setState({
-                errors:{ request_catagorie:"Choose catagorie required"},
+                errors: { request_catagorie: "Choose catagorie required" },
             });
         }
     }
@@ -62,12 +68,11 @@ class OnDemand extends Component {
                     <select class="form-control browser-default custom-select mb-4" id="catagories" name='catagories' value={this.state.catagories}
                         onChange={this.onChange}>
                         <option value="" disabled="" defaultValue="">Choose your Category</option>
-                        <option value="Information Technology">Information Technology</option>
-                        <option value="Mechanical">Mechanical</option>
-                        <option value="Hardware">Hardware</option>
-                        <option value="Electrical">Electrical</option>
+                        {this.state.catlist.map(name =>
+                            <option value={name}>{name}</option>
+                        )}
                     </select>
-                    <span class="red-text">{errors.request_catagorie}</span><br/>
+                    <span class="red-text">{errors.request_catagorie}</span><br />
                     <DayPickerInput onDayChange={this.handleDayChange} />
                     {/* <Moment format="MMMM DD, YYYY" className="mr-2">{this.state.selectedDay}</Moment> */}
                     <button class="btn btn-info btn-block my-4 waves-effect" type="submit">Request</button>

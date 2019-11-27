@@ -8,10 +8,21 @@ module.exports = function validateRegisterInput(data) {
     data.password = !isEmpty(data.password) ? data.password : "";
     data.password2 = !isEmpty(data.password2) ? data.password2 : "";
     data.user_type = !isEmpty(data.user_type) ? data.user_type : "";
+    data.squestion = !isEmpty(data.squestion) ? data.squestion : "";
+    data.sanswer = !isEmpty(data.sanswer) ? data.sanswer : "";
 
     //check the validation for username
     if (Validator.isEmpty(data.username)) {
         errors.username = "Username Field is required";
+    }
+    // check the validation for security question
+    if (Validator.isEmpty(data.squestion)) {
+        errors.squestion = "Security question Field is required";
+    }
+
+    // check the validation for security answer
+    if (Validator.isEmpty(data.sanswer)) {
+        errors.sanswer = "Security answer Field is required";
     }
 
     //check the validation for email

@@ -50,11 +50,11 @@ class UserProfile extends Component {
         store.addNotification({
             title: 'Database',
             message: 'Update Profile Successfully ',
-            type: 'success',                        
+            type: 'success',
             insert: "top",
-            container: "top-right",              
-            animationIn: ["animated", "fadeIn"],    
-            animationOut: ["animated", "fadeOut"],   
+            container: "top-right",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
             dismiss: {
                 duration: 3000,
                 showIcon: true
@@ -122,10 +122,20 @@ class UserProfile extends Component {
                         <select class="form-control" name='work_catagorie' value={this.state.work_catagorie}
                             onChange={this.onChange}>
                             <option>By Category</option>
-                            <option value="Information Technology">Information Technology</option>
-                            <option value="Mechanical">Mechanical</option>
-                            <option value="Hardware">Hardware</option>
-                            <option value="Electrical">Electrical</option>
+                            <option value="Automotive">Automotive</option>
+                            <option value="Agriculture">Agriculture/Farming</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Construction">Construction/ Facilities</option>
+                            <option value="Customer Service">Customer Service</option>
+                            <option value="Finance">Accounting/ Finanace</option>
+                            <option value="Food Service">Restaurant / Food Service</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Multimedia">Desgin, Art &amp; Multimedia</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Volunteer">Volunteer</option>
+                            <option value="Warehouse">Warehouse</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div className="form-group">

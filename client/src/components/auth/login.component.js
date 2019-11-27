@@ -62,7 +62,8 @@ class Login extends Component {
                             value={this.state.password}
                             error={errors.password}
                             id="password" />
-                        <span class="red-text">{errors.password}{errors.passwordincorrect}</span>
+                        <span class="red-text">{errors.password}{errors.passwordincorrect}</span><br/>
+                        <Link to="/forgotpassword">Forgot Password?</Link>
                         <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
                         <div class="text-center">
                             <p>Not a member? <Link to="/register">Register</Link></p>

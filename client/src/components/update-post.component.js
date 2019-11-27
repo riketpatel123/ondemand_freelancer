@@ -81,6 +81,7 @@ class UpdatePost extends Component {
                             name='post_title'
                             value={this.state.post_title}
                             onChange={this.onChange}
+                            maxlength="50" 
                         />
                     </div>
                     <div className="form-group">
@@ -140,6 +141,7 @@ class UpdatePost extends Component {
                                 name='post_postal_code'
                                 value={this.state.post_postal_code}
                                 onChange={this.onChange}
+                                maxlength="6" 
                             />
                         </div>
                         <div className="form-group col-md-2">

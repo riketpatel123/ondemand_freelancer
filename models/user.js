@@ -19,6 +19,14 @@ const UserSchema = new Schema({
         required: true,
         enum: ['Admin', 'Freelancer', 'Employer'],
         default: 'Freelancer'
+    },
+    squestion:{
+        type: String,
+        required: true
+    },
+    sanswer:{
+        type: String,
+        required: true
     }
 });
 

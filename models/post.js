@@ -14,7 +14,8 @@ var PostSchema = new Schema({
     postal_code:{type: String, required: true},
     province:{type: String, required: true},
     country:{type: String, required: true},
-    post_date:{type: Date, default: Date.now}
+    post_date:{type: Date, default: Date.now},
+    confirm_freelancer: {type: String, default: null}
 });
 
 PostSchema.virtual('post_date_formatted')

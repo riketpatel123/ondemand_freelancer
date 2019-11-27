@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-class ViewPost extends Component {
+class ConfirmPage extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
@@ -15,10 +15,6 @@ class ViewPost extends Component {
             post_catagories: '',
             post_budget: '',
             post_address: '',
-            confirm_freelancer: '',
-            bid_amount: '',
-            list_of_bids: [],
-            number_of_bids: 0,
             employer_details: {
                 full_name: '',
                 user_id: '',
@@ -48,44 +44,31 @@ class ViewPost extends Component {
                         + postListResponse.data.city + ", "
                         + postListResponse.data.postal_code + ", "
                         + postListResponse.data.province + ", "
-                        + postListResponse.data.country,
-                    confirm_freelancer: postListResponse.data.confirm_freelancer
+                        + postListResponse.data.country
                 });
-                if (this.state.confirm_freelancer !== null) {
-                    document.getElementById("additionalpanel").style.display = "none";
-                    document.getElementById("showbids").style.display = "none";
-                    document.getElementById("confirmedPanel").style.display = "block";
-                    this.getuserProfile(this.state.confirm_freelancer);
-                }
-                if( this.props.auth.user.id === this.state.user_id){
-                    document.getElementById("bidPanel").style.visibility= "hidden";
-                }
                 this.setState({
                     list_of_bids: bidListResponse.data,
                     number_of_bids: bidListResponse.data.length
                 });
-                this.getuserProfile(this.state.user_id);
+                axios.get('/users/userprofile/' + this.state.user_id)
+                    .then(response => {
+                        this.setState({
+                            employer_details: {
+                                user_id: response.data.user_id,
+                                full_name: response.data.full_name,
+                                work_title: response.data.work_title,
+                                work_catagorie: response.data.work_catagorie,
+                                email: response.data.email,
+                                contact_number: response.data.contact_number,
+                                websites: response.data.websites
+                            }
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             })
             .catch(error => {
-                console.log(error);
-            });
-    }
-    getuserProfile(user_id) {
-        axios.get('/users/userprofile/' + user_id)
-            .then(response => {
-                this.setState({
-                    employer_details: {
-                        user_id: response.data.user_id,
-                        full_name: response.data.full_name,
-                        work_title: response.data.work_title,
-                        work_catagorie: response.data.work_catagorie,
-                        email: response.data.email,
-                        contact_number: response.data.contact_number,
-                        websites: response.data.websites
-                    }
-                });
-            })
-            .catch(function (error) {
                 console.log(error);
             });
     }
@@ -95,23 +78,12 @@ class ViewPost extends Component {
                 <div class="row pl-4">
                     <div class="col"><Link to={"/viewprofile/" + bid.user_id}>{bid.username}</Link></div>
                     <div class="col">${bid.bid_amount}</div>
-                    <div class="col"><button className="btn btn-primary" onClick={() => this.confirmedFreelancerRequest(bid.user_id)} >Hire Me</button></div>
+                    <div class="col"><button className="btn btn-primary">Hire Me</button></div>
                 </div>
             </div>
         )
     }
-    confirmedFreelancerRequest(freelancer_id) {
-        const requestData = {
-            confirm_freelancer: freelancer_id
-        };
-        axios.post('/post/confirm/' + this.props.match.params.id, requestData)
-            .then(res => {
-                console.log(res.data);
-                if(!alert('Freelancer Confirmed !')){window.location.reload();}
-            }).catch(function (error) {
-                console.log(error.response.data);
-            });
-    }
+
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -145,7 +117,7 @@ class ViewPost extends Component {
                     <p><mark>{this.state.post_catagories}</mark> | Address: {this.state.post_address} | <strong> ${this.state.post_budget}</strong></p>
                     <p>{this.state.post_description}</p>
                 </div>
-                <div class="row" id="additionalpanel" >
+                <div class="row">
                     <div class="card col ml-3 mr-5">
                         <div class="view overlay mt-2 ">
                             <h6>About the Employer</h6>
@@ -153,13 +125,13 @@ class ViewPost extends Component {
                         <div class="card-body">
                             <h4 class="card-title"><i class="fas fa-user-tie mr-2 "></i><Link to={"/viewprofile/" + this.state.employer_details.user_id}>{this.state.employer_details.full_name}</Link></h4>
                             <h6>{this.state.employer_details.work_title}</h6>
-                            <small class="badge badge-primary badge-pill p-2"><i class="fas fa-tag mr-2" style={{ color: "white" }}></i>{this.state.employer_details.work_catagorie}</small>
+                            <small class="badge badge-primary badge-pill p-2"><i class="fas fa-tag mr-2" style={{color:"white"}}></i>{this.state.employer_details.work_catagorie}</small>
                             <p><i class="fas fa-envelope mr-2"></i>  {this.state.employer_details.email}</p>
                             <p><i class="fas fa-phone mr-2"></i>{this.state.employer_details.contact_number}</p>
                             <p><i class="fas fa-globe-americas mr-2"></i>{this.state.employer_details.websites}</p>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-7 input_bid_amount pl-lg-5" id="bidPanel">
+                    <div class="col-lg-8 col-md-7 input_bid_amount pl-lg-5">
                         <form onSubmit={this.onSubmit}>
                             <h3>Place a Bid on this Project</h3>
                             <h6 class="mt-4">Bid Details</h6>
@@ -178,25 +150,8 @@ class ViewPost extends Component {
                         </form>
                     </div>
                 </div>
-                <div id="confirmedPanel">
-                    <div class="card col-lg-4">
-                        <div class="view overlay mt-2">
-                            <h6><i class="far fa-check-circle pr-1 fa-2x" style={{ color: "orange" }}></i>About the Confirmed Freelancer</h6>
-                        </div>
-                        <div class="card-body">
-                            <h4 class="card-title"><i class="fas fa-user-tie mr-2 "></i><Link to={"/viewprofile/" + this.state.employer_details.user_id}>{this.state.employer_details.full_name}</Link></h4>
-                            <h6>{this.state.employer_details.work_title}</h6>
-                            <small class="badge badge-primary badge-pill p-2"><i class="fas fa-tag mr-2" style={{ color: "white" }}></i>{this.state.employer_details.work_catagorie}</small>
-                            <p><i class="fas fa-envelope mr-2"></i>  {this.state.employer_details.email}</p>
-                            <p><i class="fas fa-phone mr-2"></i>{this.state.employer_details.contact_number}</p>
-                            <p><i class="fas fa-globe-americas mr-2"></i>{this.state.employer_details.websites}</p>
-                        </div>
-                    </div>
-                </div>
-                <div id="showbids" >
-                    <h5 className="mt-3">Freelancer Bids on this Post ({this.state.number_of_bids})</h5>
-                    <div>{this.postBidList()}</div>
-                </div>
+                <h5 className="mt-3">Freelancer Bids on this Post ({this.state.number_of_bids})</h5>
+                <div>{this.postBidList()}</div>
             </div>
         );
     }
@@ -204,4 +159,4 @@ class ViewPost extends Component {
 const mapStateToProps = state => ({
     auth: state.auth
 });
-export default connect(mapStateToProps)(ViewPost);
+export default connect(mapStateToProps)(ConfirmPage);

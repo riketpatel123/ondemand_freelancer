@@ -14,6 +14,9 @@ var ondemandRouter = require('./routes/ondemand');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+
 var PORT = process.env.PORT || 8000;
 
 app.use((req, res, next) => {
@@ -23,7 +26,7 @@ app.use((req, res, next) => {
 });
 
 // Handle the front end
-app.use(express.static(path.join(__dirname,"client","build")))
+app.use(express.static(path.join(__dirname, "client", "build")))
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -43,9 +46,17 @@ app.use('/post', indexRouter);
 app.use('/request', ondemandRouter);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname,"client","build","index.html"));
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
-app.listen(PORT, function () {
+/** Socket.io messaging */
+io.on("connection", socket => {
+  socket.on("chat message", ({from,to,msg}) => {
+    var emitTO = to + "message";
+    io.emit(emitTO, {from,msg});
+  });
+});
+
+server.listen(PORT, function () {
   console.log('[backend] Server is running on Port:', PORT);
 });

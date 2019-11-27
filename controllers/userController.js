@@ -1,5 +1,7 @@
 var UserProfile = require('../models/user_profile');
 var UserReviews = require('../models/user_review');
+var User = require('../models/user');
+
 const isEmpty = require("is-empty");
 
 exports.create_user_profile = function (req, res, next) {
@@ -56,7 +58,7 @@ exports.view_user_reviews_and_comments = function (req, res, next) {
     UserReviews.find({ user_id: req.params.user_id }, function (err, user_reviews) {
         if (err) {
             res.status(400).send('Failed to retrive user reviews');
-            console.log("[backend] ERROR: In fetching user review ", err); 
+            console.log("[backend] ERROR: In fetching user review ", err);
         } else if (isEmpty(user_reviews)) {
             res.status(200).send('No Reviews Found');
         } else {
@@ -75,4 +77,17 @@ exports.create_new_review = function (req, res, next) {
             console.log("[backend] ERROR: ", error);
             res.status(400).send("Failed to create Review");
         });
+};
+
+/** Verify User for security question */
+exports.forgot_password_squestion = function (req, res, next) {
+    User.findOne({ email: req.params.email }, function (err, userdata) {
+        if (err) {
+            res.status(400).send('Recovery email not found');
+            console.log("[backend] ERROR: In fetching user data ", err);
+            return next(err);
+        } else {
+            res.status(200).json(userdata);
+        }
+    });
 };
