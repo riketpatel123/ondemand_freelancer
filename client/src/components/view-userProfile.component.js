@@ -77,7 +77,7 @@ class ViewUserProfile extends Component {
                     websites: profileResponse.data.websites,
                     profile_photo: profileResponse.data.profile_photo,
                 });
-                if(reviewResponse.data !== "No Reviews Found"){
+                if (reviewResponse.data !== "No Reviews Found") {
                     this.setState({
                         list_of_reviews: reviewResponse.data,
                         review_count: reviewResponse.data.length
@@ -107,7 +107,10 @@ class ViewUserProfile extends Component {
             .then(response => {
                 axios.get('/users/userprofile/review/' + this.props.match.params.id)
                     .then(resp => {
-                        this.setState({ list_of_reviews: resp.data });
+                        this.setState({
+                            list_of_reviews: resp.data,
+                            review_count: resp.data.length
+                        });
                     });
                 store.addNotification({
                     title: 'Review Status',
@@ -125,7 +128,7 @@ class ViewUserProfile extends Component {
                 });
             });
     }
-    goBack(){
+    goBack() {
         this.props.history.goBack();
     }
     render() {
@@ -192,6 +195,7 @@ class ViewUserProfile extends Component {
                                         value={this.state.feedback}
                                         onChange={this.onChange}
                                         placeholder="Feedback"
+                                        required
                                     />
                                 </div>
                                 <input type="submit" value="Review Post" className="btn btn-primary" />
