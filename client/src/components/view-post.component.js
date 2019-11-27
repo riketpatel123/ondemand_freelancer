@@ -52,19 +52,21 @@ class ViewPost extends Component {
                     confirm_freelancer: postListResponse.data.confirm_freelancer
                 });
                 if (this.state.confirm_freelancer !== null) {
+                    this.getuserProfile(this.state.confirm_freelancer);
                     document.getElementById("additionalpanel").style.display = "none";
                     document.getElementById("showbids").style.display = "none";
                     document.getElementById("confirmedPanel").style.display = "block";
-                    this.getuserProfile(this.state.confirm_freelancer);
+                }else{
+                    this.getuserProfile(this.state.user_id);
                 }
-                if( this.props.auth.user.id === this.state.user_id){
-                    document.getElementById("bidPanel").style.visibility= "hidden";
+                if (this.props.auth.user.id === this.state.user_id) {
+                    document.getElementById("bidPanel").style.visibility = "hidden";
                 }
                 this.setState({
                     list_of_bids: bidListResponse.data,
                     number_of_bids: bidListResponse.data.length
                 });
-                this.getuserProfile(this.state.user_id);
+               
             })
             .catch(error => {
                 console.log(error);
@@ -95,7 +97,11 @@ class ViewPost extends Component {
                 <div class="row pl-4">
                     <div class="col"><Link to={"/viewprofile/" + bid.user_id}>{bid.username}</Link></div>
                     <div class="col">${bid.bid_amount}</div>
-                    <div class="col"><button className="btn btn-primary" onClick={() => this.confirmedFreelancerRequest(bid.user_id)} >Hire Me</button></div>
+                    <div class="col">
+                        {(this.props.auth.user.id === this.state.user_id) ?
+                            (<button className="btn btn-primary" onClick={() => this.confirmedFreelancerRequest(bid.user_id)} >Hire Me</button>
+                            ) : (<p></p>)}
+                    </div>
                 </div>
             </div>
         )
@@ -107,7 +113,7 @@ class ViewPost extends Component {
         axios.post('/post/confirm/' + this.props.match.params.id, requestData)
             .then(res => {
                 console.log(res.data);
-                if(!alert('Freelancer Confirmed !')){window.location.reload();}
+                if (!alert('Freelancer Confirmed !')) { window.location.reload(); }
             }).catch(function (error) {
                 console.log(error.response.data);
             });
