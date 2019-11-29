@@ -112,6 +112,7 @@ class UpdatePost extends Component {
                                 name='post_budget'
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
+                                max="1000000"
                             />
                         </div>
                     </div>

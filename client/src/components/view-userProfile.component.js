@@ -140,7 +140,7 @@ class ViewUserProfile extends Component {
                 </div>
                 <div class="row">
                     <div class="col-md-4 pr-md-5">
-                        <img class="w-100 rounded border rounded-circle" src="https://img.icons8.com/plasticine/2x/user.png" alt="Profile" />
+                        <img class="w-100 rounded border rounded-circle" src="https://i.pinimg.com/originals/d1/1a/45/d11a452f5ce6ab534e083cdc11e8035e.png" alt="Profile" />
                         <div class="pt-4 mt-2">
                             <section class="mb-4 pb-1">
                                 <h3 class="h6 font-weight-light text-secondary text-uppercase">Catagories</h3>
@@ -167,14 +167,14 @@ class ViewUserProfile extends Component {
                             {this.state.work_title}
                         </p>
                         <p class="lead mt-4">{this.state.description}</p>
-                        <section class="d-flex mt-5">
-                            <button class="btn btn-light bg-transparent mr-3 mb-3">
+                        <section class="d-flex mt-5 row">
+                            <a href={"mailto:"+ this.state.email} class="btn btn-light bg-transparent mr-3 mb-3">
                                 <i class="fas fa-envelope mr-2"></i>  {this.state.email}
-                            </button>
+                            </a>
                             <button class="btn btn-light bg-transparent mr-3 mb-3">
                                 <i class="fas fa-phone mr-2"></i>{this.state.contact_number}
                             </button>
-                            <button class="btn btn-primary mb-3">
+                            <button class="btn btn-light mb-3">
                                 <i class="fas fa-globe-americas mr-2"></i>{this.state.websites}
                             </button>
                         </section>

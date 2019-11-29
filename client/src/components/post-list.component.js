@@ -13,6 +13,7 @@ class ShowPostList extends Component {
             list_of_posts: [],
             isLoading: true
         };
+        this.aceSort = this.aceSort.bind(this);
     }
     componentDidMount() {
         axios.get("/post/")
@@ -22,6 +23,12 @@ class ShowPostList extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+    }
+    /** Sort the list by title in acending order */
+    aceSort(event, sortKey) {
+        const list_of_posts = this.state.list_of_posts;
+        list_of_posts.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
+        this.setState({ list_of_posts })
     }
     /** Method to Delete Work Post */
     deletePost(post_id) {
@@ -70,7 +77,10 @@ class ShowPostList extends Component {
     render() {
         return (
             <div className="container">
-                <h6 className="mb-3">Freelancer  > Browse All Posts </h6>
+                <div className="d-flex flex-row">
+                    <h6 className="mb-3">Freelancer  > Browse All Posts </h6>
+                    <p className="ml-auto border" onClick={e => this.aceSort(e, 'post_title')}>Sort by A-Z <i class="fas fa-caret-down ml-1"></i></p>
+                </div>
                 {this.postList()}
             </div>
         );

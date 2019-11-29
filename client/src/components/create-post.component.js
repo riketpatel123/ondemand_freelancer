@@ -96,7 +96,7 @@ class CreatePost extends Component {
                             <div className="form-group">
                                 <label>Catagories: </label>
                                 <select class="form-control" name='post_catagories' value={this.state.post_catagories}
-                                    onChange={this.onChange}>
+                                    onChange={this.onChange} required>
                                     <option>Choose Category</option>
                                     <option value="Automotive">Automotive</option>
                                     <option value="Agriculture">Agriculture/Farming</option>
@@ -124,7 +124,7 @@ class CreatePost extends Component {
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
                                 placeholder="Budget"
-                                max="10"
+                                max="1000000"
                                 required
                             />
                         </div>

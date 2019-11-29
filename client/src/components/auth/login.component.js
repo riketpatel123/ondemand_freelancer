@@ -48,7 +48,7 @@ class Login extends Component {
                     <form class="border border-light p-lg-5" noValidate onSubmit={this.onSubmit}>
                         <p class="h4 mb-4 text-center">Sign in</p>
                         <input type="email"
-                            class="form-control mb-4"
+                            class="form-control mb-4 rounded-pill"
                             placeholder="E-mail"
                             onChange={this.onChange}
                             value={this.state.email}
@@ -56,7 +56,7 @@ class Login extends Component {
                             id="email" />
                         <span class="red-text">{errors.email}{errors.emailnotfound}</span>
                         <input type="password"
-                            class="form-control mb-4"
+                            class="form-control mb-4 rounded-pill"
                             placeholder="Password"
                             onChange={this.onChange}
                             value={this.state.password}
@@ -64,7 +64,7 @@ class Login extends Component {
                             id="password" />
                         <span class="red-text">{errors.password}{errors.passwordincorrect}</span><br/>
                         <Link to="/forgotpassword">Forgot Password?</Link>
-                        <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                        <button class="btn btn-info btn-block my-4 rounded-pill" type="submit">Sign in</button>
                         <div class="text-center">
                             <p>Not a member? <Link to="/register">Register</Link></p>
                         </div>

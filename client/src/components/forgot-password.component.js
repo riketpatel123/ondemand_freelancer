@@ -26,7 +26,7 @@ class ForgotPassword extends Component {
             .then(response => {
                 if (this.state.sanswer === response.data.sanswer) {
                     var new_password = this.state.new_password;
-                    if (new_password.length <= 6) {
+                    if (new_password.length >= 6) {
                         const obj = {
                             password: this.state.new_password
                         };

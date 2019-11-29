@@ -16,5 +16,12 @@
 @media (min-width: 992px) {  
     #description{
         width: 600px;
-    }
+    }   
 }
+@media (min-width: 768px) { #description{
+    width: 400px;
+}    }
+
+@media (min-width: 1200px) { #description{
+    width: 600px;
+}    }

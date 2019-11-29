@@ -12,7 +12,7 @@ class Message extends Component {
         this.state = {
             chat: [],
             msg: "",
-            from: this.props.auth.user.id,
+            from: this.props.auth.user.username,
             to: this.props.match.params.name
         };
     }
@@ -41,7 +41,7 @@ class Message extends Component {
     render() {
         return (
             <div>
-                <h2><i class="fas fa-comments m-3" style={{color:"blue"}}></i>Messaging</h2>
+                <h2><i class="fas fa-comments m-3" style={{ color: "blue" }}></i>Messaging</h2>
                 <div className="chatWindow">
                     <ul className="chat" id="chatList">
                         {this.state.chat.map(({ from, msg }, id) => (

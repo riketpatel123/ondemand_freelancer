@@ -55,7 +55,7 @@ class Register extends Component {
                     <Link to="/" class="btn btn-link d-flex align-items-start">
                         <i class="fas fa-arrow-left mr-2"></i> Back to home
                         </Link>
-                    <div class="row">
+                    <div class="row ml-2">
                         <div class="col">
                             <h4>
                                 <b>Sign Up</b> below
@@ -171,7 +171,7 @@ class Register extends Component {
                                     marginTop: "1rem"
                                 }}
                                 type="submit"
-                                class="btn btn-primary">Sign up</button>
+                                class="btn btn-primary rounded-pill">Sign up</button>
                         </form>
                     </div>
                 </div>

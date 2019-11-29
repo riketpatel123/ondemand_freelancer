@@ -15,7 +15,7 @@ class Navbar extends Component {
         return (
             <header>
                 <nav className="navbar navbar-expand-md navbar-dark primary-color">
-                    <NavLink to={'/browse'} className="navbar-brand">Freelancing</NavLink>
+                    <NavLink to={'/'} className="navbar-brand">Freelancing</NavLink>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -36,9 +36,6 @@ class Navbar extends Component {
                             </li>
                             <li className="nav-item">
                                 <NavLink to={'/about'} className="nav-link">About</NavLink>
-                            </li>
-                            <li className="nav-item">
-                                <NavLink to={'/message/'+ this.props.auth.user.id} className="nav-link">Message</NavLink>
                             </li>
                         </ul>
                         <div className="my-2 my-lg-0 ml-auto">
