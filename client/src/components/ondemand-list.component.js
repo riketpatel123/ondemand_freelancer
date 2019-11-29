@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Moment from 'react-moment';
-
+/**List all the ondemand request list create by employer user */
 class OnDemandList extends Component {
     constructor(props) {
         super(props)
@@ -13,6 +13,7 @@ class OnDemandList extends Component {
             confirmedUser: ""
         }
     }
+    /** GET all ondemand request create by employer */
     componentWillMount() {
         const user_obj = { user_id: this.props.auth.user.id }
         axios.post("/request/ondemand/user_list/", user_obj)
@@ -23,7 +24,7 @@ class OnDemandList extends Component {
                 console.error(error);
             });
     }
-
+    /** Method to handle the delete  ondemand request by id*/
     deleteRequest(request_id) {
         axios.get('/request/ondemand/user_list/delete/' + request_id)
             .then(response => {
@@ -36,11 +37,13 @@ class OnDemandList extends Component {
             })
             .catch(err => console.log(err))
     }
+    /** Method to display review panel to check the status of the your ondemand request */
     reviewRequest(request_id) {
         document.getElementById("reviewPanel").style.display = "block";
         axios.get('/request/ondemand/user_list/review/' + request_id)
             .then(response => {
                 this.setState({ request_details: response.data });
+                // set status to Not confirmed if request is still in pending state
                 if (this.state.request_details.confirm_freelancer_id === undefined) {
                     this.setState({
                         confirmedUser: "Not Confirmed"

@@ -4,7 +4,7 @@ import { HashRouter as Router, Route, NavLink ,Switch} from 'react-router-dom';
 import OndemandList from "./ondemand-list.component";
 import OndemandNewRequest from "./ondemand-new-request.component";
 
-
+/** Parent Component to Handle ondemand request feature */
 export default class OnDemand extends Component {
     render() {
         return (

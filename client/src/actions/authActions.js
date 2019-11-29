@@ -3,14 +3,16 @@ import setAuthToken from "./setAuthToken";
 import jwt_decode from "jwt-decode";
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
-/**New user register */
+/** send a request to server to register new user into website */
 export const registerUser = (userData, history) => dispatch => {
     axios.post("/users/register", userData)
         .then(response => { 
+            // redirect to login page after registered
             history.push("/login")
         })
         .catch(error =>
-            {
+            { 
+            // dispatch validation error message is there is some error from server
             dispatch({
             type: GET_ERRORS,
             payload: error.response.data
@@ -18,8 +20,11 @@ export const registerUser = (userData, history) => dispatch => {
     });
 }
 
-/**Login User*/
+/**send a request to server  with login and password for login into website and collect the jwt token
+ * and  store into local storage. and verify if user try to login into our site
+ */
 export const loginUser = userData => dispatch => {
+    
     axios.post("/users/login", userData)
         .then(response => {
             // Save to localStorage
@@ -40,7 +45,7 @@ export const loginUser = userData => dispatch => {
             })
         );
 };
-/**Set logged in user */
+/**Set logged in User */
 export const setCurrentUser = decoded => {
     return {
         type: SET_CURRENT_USER,
@@ -53,7 +58,7 @@ export const setUserLoading = () => {
         type: USER_LOADING
     };
 };
-/** User LogOut */
+/**  method to handle Userlogout pocessor */
 export const logoutUser = () => dispatch => {
     // Remove token from local storage
     localStorage.removeItem("jwtToken");

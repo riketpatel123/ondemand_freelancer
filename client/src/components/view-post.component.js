@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+/**
+ * View Post Component loads when user clicks on specific post , In this page user will find all the information 
+ * about the posted job and freelancer will also place a bid on the post using biding panel. This page also allow employer
+ * to find best choice of freelancer and hire for there work
+ */
 class ViewPost extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +37,7 @@ class ViewPost extends Component {
 
         }
     }
+    /** Get the post details and bid list from the database on page load */
     componentDidMount() {
         axios.all([
             axios.get('/post/detail/' + this.props.match.params.id),
@@ -51,6 +57,7 @@ class ViewPost extends Component {
                         + postListResponse.data.country,
                     confirm_freelancer: postListResponse.data.confirm_freelancer
                 });
+                /** Display the confimation panel if the freelancer is confirmed of the post */
                 if (this.state.confirm_freelancer !== null) {
                     this.getuserProfile(this.state.confirm_freelancer);
                     document.getElementById("additionalpanel").style.display = "none";
@@ -59,6 +66,7 @@ class ViewPost extends Component {
                 }else{
                     this.getuserProfile(this.state.user_id);
                 }
+                /** Hide the biding panel from employer, to Protect them from biding on there own post */
                 if (this.props.auth.user.id === this.state.user_id) {
                     document.getElementById("bidPanel").style.visibility = "hidden";
                 }
@@ -72,6 +80,7 @@ class ViewPost extends Component {
                 console.log(error);
             });
     }
+    /** Display the user profile details on the profile card */
     getuserProfile(user_id) {
         axios.get('/users/userprofile/' + user_id)
             .then(response => {
@@ -91,6 +100,7 @@ class ViewPost extends Component {
                 console.log(error);
             });
     }
+    /** Show the list of all freelancers bid on the post */
     postBidList() {
         return this.state.list_of_bids.map(bid =>
             <div class="card p-lg-2 m-2" key={bid._id}>
@@ -106,6 +116,7 @@ class ViewPost extends Component {
             </div>
         )
     }
+    /** Send the confirmation of the freelancer to server when employer click on HIRE ME button to hire a freelancer */
     confirmedFreelancerRequest(freelancer_id) {
         const requestData = {
             confirm_freelancer: freelancer_id
@@ -118,9 +129,11 @@ class ViewPost extends Component {
                 console.log(error.response.data);
             });
     }
+    /** Handle input button onchange event when user change the value in inputbox*/
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** handle submit button event to place a bid on the post for freelancer users */
     onSubmit(e) {
         e.preventDefault();
         const newPostBid = {
@@ -128,6 +141,7 @@ class ViewPost extends Component {
             bid_amount: this.state.bid_amount,
             user_id: this.props.auth.user.id
         };
+        // send a new post request to create new bid on post by freelancer
         axios.post('/post/detail/' + this.props.match.params.id + '/bid', newPostBid)
             .then(res => {
                 if (res.status === 200) {

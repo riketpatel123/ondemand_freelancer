@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
 import { connect } from "react-redux";
-import { logoutUser } from "../actions/authActions";
-
 import axios from 'axios';
 import Moment from 'react-moment';
 
+/** My Post Component load on user click on My Post from navigation bar on top */
 class ShowMyPostList extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +12,7 @@ class ShowMyPostList extends Component {
             list_of_posts: []
         };
     }
+    /** Select all job post created by the user */
     componentDidMount() {
         const userObj = {
             user_id: this.props.auth.user.id
@@ -26,12 +25,7 @@ class ShowMyPostList extends Component {
                 console.log(error);
             });
     }
-    /**User Logout */
-    onLogoutClick = e => {
-        e.preventDefault();
-        this.props.logoutUser();
-    };
-
+    /** Delete method handle the event to delete the post from my list */
     deletePost(post_id) {
         axios.get('/post/delete/' + post_id)
             .then(response => {
@@ -39,6 +33,7 @@ class ShowMyPostList extends Component {
             })
             .catch(err => console.log(err));
     }
+    /** Design templete to display list of the job post  */
     postList() {
         return this.state.list_of_posts.map(post =>
             <div class="card row post_items m-2" key={post._id}>
@@ -81,6 +76,5 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 export default connect(
-    mapStateToProps,
-    { logoutUser }
+    mapStateToProps
 )(ShowMyPostList);

@@ -7,7 +7,7 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 import 'react-day-picker/lib/style.css';
 
-
+/** React component to create new ondemand request*/
 class OnDemand extends Component {
     constructor(props) {
         super(props)
@@ -27,12 +27,15 @@ class OnDemand extends Component {
                 "Locks Service", "Air Conditioner Service", "Lawn Care", "Flooring", "Roofing"]
         }
     }
+    /** Method to handle date change in date picker */
     handleDayChange(day) {
         this.setState({ selectedDay: day });
     }
+    /** method to handle input box onchange event */
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** method to handle onsubmit request event to create new ondemand request*/
     onSubmit(e) {
         e.preventDefault();
         const obj = {
@@ -57,6 +60,7 @@ class OnDemand extends Component {
     render() {
         const { errors } = this.state;
         var { redirect } = this.state;
+        // redirect to mylist
         if (redirect) {
             return <Redirect to='/ondemand/mylist' />;
         }
@@ -66,7 +70,7 @@ class OnDemand extends Component {
                     <p class="h4 mb-4 text-center">ON Demand Worker Request</p>
                     <label for="catagories">Choose Request Category</label>
                     <select class="form-control browser-default custom-select mb-4" id="catagories" name='catagories' value={this.state.catagories}
-                        onChange={this.onChange}>
+                        onChange={this.onChange} required >
                         <option value="" disabled="" defaultValue="">Choose your Category</option>
                         {this.state.catlist.map(name =>
                             <option value={name}>{name}</option>

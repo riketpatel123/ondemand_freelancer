@@ -1,9 +1,9 @@
 var Post = require('../models/post');
 var PostBid = require('../models/post_bid');
-const isEmpty = require("is-empty");
 
 var async = require('async');
-/**Browse All the Work Post */
+
+/**GET Request: Browse all the pending job post */
 exports.browse_all_post = function (req, res, next) {
     Post.find({ confirm_freelancer: null },function (err, post_list) {
         if (err) {
@@ -14,7 +14,7 @@ exports.browse_all_post = function (req, res, next) {
         }
     });
 };
-/** Get Work post by user id */
+/** GET Request: Select Individual job post by user id */
 exports.post_list = function (req, res, next) {
     const current_user = req.body.user_id;
     Post.find({ user_id: current_user }, function (err, post_list) {
@@ -25,7 +25,7 @@ exports.post_list = function (req, res, next) {
         }
     });
 };
-/** Create new work post */ 
+/** POST: Create new work post */ 
 exports.job_post_create_post = function (req, res) {
     var post = new Post(req.body);
     post.save()
@@ -38,7 +38,7 @@ exports.job_post_create_post = function (req, res) {
             res.status(400).send('Create New Post Failed');
         });
 };
-/**Get single post detail */
+/**GET: single post detail */
 exports.post_detail = function (req, res, next) {
     var id = req.params.id;
     Post.findById(id, function (err, single_post_detail) {
@@ -53,7 +53,7 @@ exports.post_detail = function (req, res, next) {
         res.status(200).json(single_post_detail);
     });
 };
-/**Update job post details */
+/**POST: Update job post details */
 exports.job_post_update_post = function (req, res) {
     Post.findById(req.params.id, function (err, post_data) {
         if (!post_data) {
@@ -82,7 +82,7 @@ exports.job_post_update_post = function (req, res) {
         }
     });
 };
-/**Delete the user post */
+/**GET: Delete the user job post */
 exports.job_post_delete_post = function (req, res, next) {
     Post.findOneAndDelete({ _id: req.params.id }, function (err, post) {
         if (err) {
@@ -100,8 +100,10 @@ exports.job_post_delete_post = function (req, res, next) {
 
 /** Submit bid on user selected post */
 exports.submit_user_bid = function (req, res) {
+    // check if user already posted bid before
     PostBid.findOne({ username: req.body.username, post_id: req.params.id }).then(currentBid => {
         if (currentBid) {
+            // Update existing bid
             currentBid.post_id = req.params.id;
             currentBid.username = req.body.username;
             currentBid.bid_amount = req.body.bid_amount;
@@ -111,6 +113,7 @@ exports.submit_user_bid = function (req, res) {
                 res.status(200).send(currentBid);
             })
         } else {
+            // Create a bid of the user
             var post_bid = new PostBid({
                 post_id: req.params.id,
                 username: req.body.username,
@@ -130,7 +133,7 @@ exports.submit_user_bid = function (req, res) {
     });
 };
 
-/**Select all bids on the post*/
+/**GET: Select all bids on the post*/
 exports.get_all_post_bid = function (req, res) {
     var post_id = req.params.post_id;
     PostBid.find({ post_id: post_id }, function (err, post_bids) {
@@ -142,7 +145,7 @@ exports.get_all_post_bid = function (req, res) {
     });
 }
 
-/* Confirm Freelancer on the work post */
+/*POST: Confirm Freelancer on the work post */
 exports.work_post_confirm = function (req, res) {
     Post.findById(req.params.id, function (err, post_data) {
         if (!post_data) {

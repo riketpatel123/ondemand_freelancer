@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 
+/**login component  allow user to login to website using email address and password*/
 class Login extends Component {
     constructor() {
         super();
@@ -28,9 +29,11 @@ class Login extends Component {
             });
         }
     }
+    /** onchange on the input box value of email and password */
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+    /** handle onclick submit button event to login attemp*/
     onSubmit = e => {
         e.preventDefault();
         const userData = {

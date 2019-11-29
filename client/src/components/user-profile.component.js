@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
+/** UserPRofile component to update user profile of the user */
 class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +25,7 @@ class UserProfile extends Component {
             redirect: false,
         }
     }
+    /** get the details of the users from the database */
     componentDidMount() {
         axios.get('/users/userprofile/' + this.props.auth.user.id)
             .then(response => {
@@ -42,11 +44,14 @@ class UserProfile extends Component {
                 console.log(error);
             });
     }
+    /** Handle input button onchange event when user change the value in inputbox*/
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** handle submit button event to update the user profile details in the database */
     onSubmit(e) {
         e.preventDefault();
+        // Display notification message about updating user profile
         store.addNotification({
             title: 'Database',
             message: 'Update Profile Successfully ',
@@ -72,11 +77,12 @@ class UserProfile extends Component {
             profile_photo: this.state.profile_photo,
             full_name: this.state.full_name
         };
+        // send user profile update request to server
         axios.post('/users/userprofile/' + this.state.user_id, obj)
             .then(res => {
-                console.log(res.data);
             });
     }
+    /** handle back button event to return to home screen */
     onBack(e) {
         this.setState({ redirect: true });
     }

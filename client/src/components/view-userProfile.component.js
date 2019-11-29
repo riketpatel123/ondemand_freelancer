@@ -6,6 +6,7 @@ import Rating from 'react-rating';
 import { store } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
+/** Compenent to display the user rating and feedback of the work */
 export class ReviewList extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +36,7 @@ export class ReviewList extends React.Component {
         );
     }
 }
-
+/** View user profile react component to display user name, title, descrption, contact deatils, reviews of the previous details */
 class ViewUserProfile extends Component {
     constructor(props) {
         super(props);
@@ -61,6 +62,7 @@ class ViewUserProfile extends Component {
             review_count: 0
         };
     }
+    /** Get the user details for server and list of the reviews posted for the user */
     componentDidMount() {
         axios.all([
             axios.get('/users/userprofile/' + this.props.match.params.id),
@@ -88,12 +90,15 @@ class ViewUserProfile extends Component {
                 console.log(error);
             });
     }
+    /** Handle input box onchange event when user change the value in inputbox*/
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** handle rating of stars on userprofile */
     handleClick(event) {
         this.setState({ rating: event });
     }
+    /** handle post review button event to post a review about the user */
     onSubmit(e) {
         e.preventDefault();
         const obj = {
@@ -103,6 +108,7 @@ class ViewUserProfile extends Component {
             reviewer_id: this.props.auth.user.id
         }
         console.log(obj);
+        /**Send post request to create new review to backend */
         axios.post('/users/feedback/review', obj)
             .then(response => {
                 axios.get('/users/userprofile/review/' + this.props.match.params.id)
@@ -112,6 +118,7 @@ class ViewUserProfile extends Component {
                             review_count: resp.data.length
                         });
                     });
+                // Display notification of new review created
                 store.addNotification({
                     title: 'Review Status',
                     message: response.data,
@@ -128,6 +135,7 @@ class ViewUserProfile extends Component {
                 });
             });
     }
+    /** Handle back button event */
     goBack() {
         this.props.history.goBack();
     }
@@ -168,7 +176,7 @@ class ViewUserProfile extends Component {
                         </p>
                         <p class="lead mt-4">{this.state.description}</p>
                         <section class="d-flex mt-5 row">
-                            <a href={"mailto:"+ this.state.email} class="btn btn-light bg-transparent mr-3 mb-3">
+                            <a href={"mailto:" + this.state.email} class="btn btn-light bg-transparent mr-3 mb-3">
                                 <i class="fas fa-envelope mr-2"></i>  {this.state.email}
                             </a>
                             <button class="btn btn-light bg-transparent mr-3 mb-3">

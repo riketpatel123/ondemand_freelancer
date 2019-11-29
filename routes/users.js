@@ -3,26 +3,30 @@ var router = express.Router();
 var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 require('dotenv').config();
+
+/** variable for secret key for jwt token */
 const keys = process.env.secretKey;
 
+/**import validation class for login and register */
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 var user_controller = require('../controllers/userController');
 
 const User = require('../models/user');
-
+/** POST router to handle registration of new user */
 router.post("/register", (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
-
+    // return error to request
     if (!isValid) {
         console.log("ERROR: ", errors);
         return res.status(400).json(errors);
     }
-
+    // find user by email address to check if user already exist
     User.findOne({ email: req.body.email }).then(user => {
         if (user) {
             return res.status(400).json({ email: "Email Already Registered" });
         } else {
+            // new user object 
             const newUser = new User({
                 username: req.body.username,
                 email: req.body.email,
@@ -31,8 +35,7 @@ router.post("/register", (req, res) => {
                 squestion: req.body.squestion,
                 sanswer: req.body.sanswer
             });
-
-            // Password hashing before saveing to database
+            // Password hashing before saveing to database uisng bcrypt library
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
@@ -49,7 +52,7 @@ router.post("/register", (req, res) => {
         }
     });
 });
-
+/**POST route to handle login request */
 router.post("/login", (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
 
@@ -81,7 +84,7 @@ router.post("/login", (req, res) => {
                     payload,
                     keys,
                     {
-                        expiresIn: 1200
+                        expiresIn: 3600
                     },
                     (err, token) => {
                         res.json({
@@ -102,12 +105,15 @@ router.post("/login", (req, res) => {
     });
 });
 
-
+/** POST router to handle forgot password request */
 router.post("/forgotpassword/:email", (req, res) => {
+    // find the user by email
     User.findOne({ email: req.params.email }).then(user => {
+        // return 404 if email not found
         if (!user) {
             return res.status(404).json({ email: "Email Not Found" });
         } else {
+            // Password hashing before saveing to database uisng bcrypt library
             bcrypt.genSalt(10, (err, salt) => {
                 bcrypt.hash(req.body.password, salt, (err, hash) => {
                     if (err) throw err;
@@ -115,6 +121,7 @@ router.post("/forgotpassword/:email", (req, res) => {
                     user.save()
                         .then(newUserData => {
                             console.log("INFO: Password Reset", newUserData);
+                            // return response to font end
                             res.send("Password reset sucessfully");
                         })
                         .catch(err => console.log(err)

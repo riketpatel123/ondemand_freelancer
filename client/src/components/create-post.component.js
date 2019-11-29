@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from "react-redux";
-
+/** react compmoent to Create new job post */
 class CreatePost extends Component {
     constructor(props) {
         super(props)
@@ -22,9 +22,11 @@ class CreatePost extends Component {
             redirect: false
         }
     }
+    /** handle onchange event of the input box */
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** handle onclick event to create an new post and send a create new post request to server */
     onSubmit(e) {
         e.preventDefault();
         const obj = {
@@ -43,18 +45,6 @@ class CreatePost extends Component {
             .then(response => {
                 this.setState({ redirect: true })
             });
-
-        // this.setState({
-        //     post_title:'',
-        //     post_description:'',
-        //     post_catagories:'',
-        //     post_budget:'',
-        //     post_address:'',
-        //     post_city:'',
-        //     post_postal_code:'',
-        //     post_province:'',
-        //     post_country:''
-        // })
     }
     render() {
         // Redirect to Main Page
@@ -116,15 +106,15 @@ class CreatePost extends Component {
                             </div>
                         </div>
                         <div className="form-group col-lg-6 d-flex align-items-center">
-                            <label className="m-lg-5 mr-2">Budget: </label>
+                            <label className="m-lg-5 mr-2">Budget/Wage: </label>
                             <i class="fas fa-dollar-sign mr-1"></i>
-                            <input type="number"
+                            <input type="text"
                                 className="form-control"
                                 name='post_budget'
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
                                 placeholder="Budget"
-                                max="1000000"
+                                max="30"
                                 required
                             />
                         </div>

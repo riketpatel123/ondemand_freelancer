@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Redirect } from 'react-router';
 import axios from 'axios';
 
+/** react component of forgot password to reset the password */
 class ForgotPassword extends Component {
     constructor() {
         super();
@@ -17,19 +18,26 @@ class ForgotPassword extends Component {
             errors: {}
         };
     }
+    /** handle onchange event of the input box */
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+    /** handle Onclick event of the reset password button,
+     *  which will reset the password of the user if the security answer is correct 
+     * */
     onSubmit = e => {
         e.preventDefault();
+        /** find the user by user email address */
         axios.get('/users/forgotpassword/' + this.state.email)
-            .then(response => {
+            .then(response => { 
+                // match the security answer
                 if (this.state.sanswer === response.data.sanswer) {
                     var new_password = this.state.new_password;
                     if (new_password.length >= 6) {
                         const obj = {
                             password: this.state.new_password
                         };
+                        // reset the password of the user
                         axios.post('/users/forgotpassword/' + this.state.email, obj)
                             .then(response => {
                                 this.setState({
@@ -53,6 +61,7 @@ class ForgotPassword extends Component {
                 console.error(error);
             });
     };
+    /** Handle click event to check the user is exist or not */
     checkEmail() {
         axios.get('/users/forgotpassword/' + this.state.email)
             .then(response => {
@@ -72,7 +81,7 @@ class ForgotPassword extends Component {
     }
     render() {
         const { errors } = this.state;
-        // Redirect to Main Page
+        // Redirect to login Page
         var { redirect } = this.state;
         if (redirect) {
             return <Redirect to='/login' />;

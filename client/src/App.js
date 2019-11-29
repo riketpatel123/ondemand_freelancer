@@ -7,9 +7,10 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./actions/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import './App.css';
-
+// import mdbootstrap css 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// import different react component on user request using react router
 import Home from "./components/home.component";
 import Navbar from "./components/navbar.component";
 import Register from "./components/auth/register.component";

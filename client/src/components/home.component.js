@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+/**Landing page of the website */
 export default class Home extends Component {
     render() {
         return (
@@ -153,11 +154,10 @@ export default class Home extends Component {
                         <div class="row mt-3">
                             <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
                                 <h6 class="text-uppercase font-weight-bold">
-                                    <strong>Company name</strong>
+                                    <strong>Freelancer</strong>
                                 </h6>
                                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: "60px" }} />
-                                <p>Here you can use rows and columns here to organize your footer content. Lorem ipsum dolor sit
-                        amet, consectetur adipisicing elit.</p>
+                                <p>Freelancer work portal help you to find work</p>
                             </div>
                             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
                                 <h6 class="text-uppercase font-weight-bold">
@@ -165,16 +165,13 @@ export default class Home extends Component {
                                 </h6>
                                 <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style={{ width: "60px" }} />
                                 <p>
-                                    <a href="#!">Browse</a>
+                                    <Link to="/browse">Browse</Link>
                                 </p>
                                 <p>
-                                    <a href="#!">Ondemand Worker</a>
+                                    <Link to="/ondemand">Ondemand Worker</Link>
                                 </p>
                                 <p>
-                                    <a href="#!">About</a>
-                                </p>
-                                <p>
-                                    <a href="#!">Help</a>
+                                    <Link to="/about">About</Link>
                                 </p>
                             </div>
                         </div>

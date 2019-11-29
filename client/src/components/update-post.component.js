@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from "react-redux";
 
+/** React Component to Update the job post detail, this component load when user click on update button */
 class UpdatePost extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +23,7 @@ class UpdatePost extends Component {
             redirect: false
         }
     }
+    /** Collect  all the post post detail by post id */
     componentDidMount() {
         axios.get('/post/detail/' + this.props.match.params.id)
             .then(response => {
@@ -40,10 +42,12 @@ class UpdatePost extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-    }
+    } 
+    /** Handle input button onchange event when user change the value in inputbox*/
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
+    /** handle submit button event to update the post details in the database */
     onSubmit(e) {
         e.preventDefault();
         const obj = {
@@ -58,6 +62,7 @@ class UpdatePost extends Component {
             province: this.state.post_province,
             country: this.state.post_country
         };
+        /** send the post request to update the job details in database */
         axios.post('/post/update/' + this.props.match.params.id, obj)
             .then(res => {
                 console.log(res.data);
@@ -107,12 +112,12 @@ class UpdatePost extends Component {
                         </div>
                         <div className="form-group col-md-6">
                             <label>Budget: </label>
-                            <input type="number"
+                            <input type="text"
                                 className="form-control"
                                 name='post_budget'
                                 value={this.state.post_budget}
                                 onChange={this.onChange}
-                                max="1000000"
+                                max="30"
                             />
                         </div>
                     </div>

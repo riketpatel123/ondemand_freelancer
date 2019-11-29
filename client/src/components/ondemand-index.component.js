@@ -12,6 +12,7 @@ class OnDemandList extends Component {
             list_of_requests: [],
         }
     }
+    /** get list of all the ondemand request for the freelancer user  */
     componentWillMount() {
         axios.get("/request/ondemand/")
             .then(response => {
@@ -21,6 +22,7 @@ class OnDemandList extends Component {
                 console.error(error);
             });
     }
+    /** Method to show notification when user accept the request */
     ShowNotification(message) {
         store.addNotification({
             title: 'Database',
@@ -37,12 +39,15 @@ class OnDemandList extends Component {
             width: 250
         });
     }
+    /** Confirm the request when user click on accept button */
     reviewRequest(request_id) {
         console.log(request_id);
+        
         var requestObj = {
             request_status: "Confirmed",
             confirm_freelancer_id: this.props.auth.user.id
         }
+        // send freelancer_id to confirm the request of ondemand
         axios.post("/request/ondemand/confirm/" + request_id, requestObj)
             .then(response => {
                 this.ShowNotification(response.data.message);

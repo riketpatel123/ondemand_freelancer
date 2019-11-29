@@ -3,6 +3,7 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 
+/** react component of the register page */
 class Register extends Component {
     constructor() {
         super();
@@ -21,14 +22,18 @@ class Register extends Component {
             this.props.history.push("/browse");
         }
     }
+    /** Handle user type change event by value */
     handleOptionChange(e) {
         this.setState({ userType: e.target.value });
     }
+    /** Handle inputbox value change event by matching targeted id */
     onChange = e => {
         this.setState({ [e.target.id]: e.target.value });
     };
+    /** Handle Register button click event and send registration data to server */
     onRegister = e => {
         e.preventDefault();
+        // new object to store user input data and send to back end
         const userData = {
             email: this.state.email,
             username: this.state.username,

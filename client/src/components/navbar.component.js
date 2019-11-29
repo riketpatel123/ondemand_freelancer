@@ -3,14 +3,16 @@ import { NavLink } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { logoutUser } from "../actions/authActions";
-
+/** Navigation bar of the website */
 class Navbar extends Component {
     onLogoutClick = e => {
         e.preventDefault();
         this.props.logoutUser();
     };
     render() {
+        // variable to check is user isloged in or not
         var isLogin = !!(this.props.auth.user.username);
+        // variable to check type of the users to change layout of website
         var isFreelancer = (this.props.auth.user.user_type === "Freelancer");
         return (
             <header>

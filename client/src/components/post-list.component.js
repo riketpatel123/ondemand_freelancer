@@ -15,6 +15,7 @@ class ShowPostList extends Component {
         };
         this.aceSort = this.aceSort.bind(this);
     }
+    /** GET List of all the job post create by different employers */
     componentDidMount() {
         axios.get("/post/")
             .then(response => {

@@ -8,7 +8,7 @@ const keys = process.env.secretKey;
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = keys;
-
+/** Export passport.js to create a jwt token for login */
 module.exports = passport => {
     passport.use(
         new JwtStrategy(opts, (jwt_payload, done) => {

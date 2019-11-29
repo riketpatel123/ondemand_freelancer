@@ -1,6 +1,6 @@
 var Ondemand = require('../models/ondemand_request');
-const isEmpty = require("is-empty");
-/**Create new request */
+
+/** POST request to create new ondemand request */
 exports.create_new_ondemand_request = function (req, res) {
     var new_request = new Ondemand(req.body);
     new_request.save()
@@ -13,7 +13,8 @@ exports.create_new_ondemand_request = function (req, res) {
             res.status(400).send("Submitted Request Failed");
         });
 };
-/** Select all user request list  */
+
+/**GET request to select request by user_id */
 exports.get_all_ondemand_request_by_user_id = function (req, res) {
     const current_user = req.body.user_id;
     Ondemand.find({ user_id: current_user }, function (err, request_list) {
@@ -26,7 +27,8 @@ exports.get_all_ondemand_request_by_user_id = function (req, res) {
         }
     });
 };
-/**Select all ondemand request*/
+
+/**GET: to select all ondemand request with request_status='Pending'*/
 exports.get_all_ondemand_request = function (req, res, next) {
     Ondemand.find({ request_status:"Pending" },function (err, ondemand_list) {
         if (err) {
@@ -37,7 +39,8 @@ exports.get_all_ondemand_request = function (req, res, next) {
         }
     });
 };
-/**Retrive Single ondemand request details */
+
+/**GET Request to select single ondemand request details by request_id */
 exports.review_ondemand_request_details = function (req, res, next) {
     var request_id = req.params.id;
     Ondemand.findById(request_id, function (err, single_request_details) {
@@ -52,8 +55,9 @@ exports.review_ondemand_request_details = function (req, res, next) {
         }
         res.status(200).json(single_request_details);
     });
-}
-/** Delete ondemand request by id */
+};
+
+/** GET Request: Delete ondemand request by request_id */
 exports.delete_ondemand_request = function (req, res, next) {
     var request_id = req.params.id;
     Ondemand.findOneAndDelete({ _id: request_id}, function (err, request) {
@@ -68,8 +72,9 @@ exports.delete_ondemand_request = function (req, res, next) {
             res.status(200).send("Request Sucessfully Deleted");
         }
     });
-}
-/**Update Ondemand request for freelancer id confirmation */
+};
+
+/** POST: To update Ondemand request for freelancer id confirmation */
 exports.update_ondemand_request = function (req, res, next) {
     var request_id = req.params.id;
     Ondemand.findById(request_id, function (err, request_data) {
@@ -90,4 +95,4 @@ exports.update_ondemand_request = function (req, res, next) {
             });
         }
     });
-}
+};

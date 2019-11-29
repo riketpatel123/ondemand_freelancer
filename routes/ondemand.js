@@ -21,5 +21,4 @@ router.get('/ondemand/user_list/delete/:id',ondemand_controller.delete_ondemand_
 /** Updata ondemand request confirm freelancer. */
 router.post('/ondemand/confirm/:id',ondemand_controller.update_ondemand_request);
 
-
 module.exports = router;
